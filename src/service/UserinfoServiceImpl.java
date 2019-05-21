@@ -3,8 +3,8 @@ import  dao.*;
 import bean.*;
 public class UserinfoServiceImpl implements UserinfoService {
     private UserinfoDao userinfoDao = new UserinfoDaoImpl();
-    public int login(String username, String password) {
-        int result = 0;
+    public UserinfoBean login(String username, String password) {
+        UserinfoBean result = null;
         try{
             result=userinfoDao.login(username,password);
         }catch(Exception e){

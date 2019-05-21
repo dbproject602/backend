@@ -6,7 +6,10 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
+import bean.UserinfoBean;
 import service.*;
+import util.ObjToBytes;
+
 @javax.servlet.annotation.WebServlet(name = "LoginServlet")
 public class LoginServlet extends javax.servlet.http.HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -15,50 +18,33 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        String username = request.getParameter("username");
+        String account = request.getParameter("account");
         String password = request.getParameter("password");
-        if ((username == null || username.equals("")) && (password == null || password.equals(""))) {
-            request.setAttribute("msg_username", "user name shouldn't be none");
-            request.setAttribute("msg_password", "password shouldn't be none");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else if (password == null || password.equals("")) {
-            request.setAttribute("username", username);
-            request.setAttribute("msg_password", "password shouldn't be none");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else if (username == null || username.equals("")) {
-            request.setAttribute("password", password);
-            request.setAttribute("msg_username", "user name shouldn't be none");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else {
-            System.out.println("success");
-            UserinfoService userinfoservice = new UserinfoServiceImpl();
 
-            int result = 0;
-            result = userinfoservice.login(username, password);
-            if (result == 1) {
-                System.out.println("visiting database successfully");
-             //   request.getRequestDispatcher("BookServlet").forward(request, response);
-                // 传递Object
-                byte[] bytes = null;
-                Object obj = true;
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                try {
-                    ObjectOutputStream oos = new ObjectOutputStream(bos);
-                    oos.writeObject(obj); //
-                    oos.flush();
-                    bytes = bos.toByteArray ();
-                    oos.close();
-                    bos.close();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                ServletOutputStream out = response.getOutputStream();
-                out.write(bytes);
-                out.flush();
-                //
-            } else {
-                request.setAttribute("msg", "the username or password is wrong");
-                request.getRequestDispatcher("login.jsp").forward(request, response); }
+        System.out.println("success");
+        UserinfoService userinfoservice = new UserinfoServiceImpl();
+
+        UserinfoBean result = null;
+        result = userinfoservice.login(account, password);
+        if (result.getId() == 1) {
+            System.out.println("visiting database successfully");
+         //   request.getRequestDispatcher("BookServlet").forward(request, response);
+            // 传递Object
+            byte[] bytes = null;
+            Object obj = result;
+            bytes = ObjToBytes.objtobytes(obj);
+            ServletOutputStream out = response.getOutputStream();
+            out.write(bytes);
+            out.flush();
+            //
+        } else {
+            System.out.println("false");
+            byte[] bytes = null;
+            Object obj = 1;
+            bytes = ObjToBytes.objtobytes(obj);
+            ServletOutputStream out = response.getOutputStream();
+            out.write(bytes);
+            out.flush();
         }
-    }
+        }
 }

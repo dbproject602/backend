@@ -1,7 +1,5 @@
 package dao;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import bean.*;
@@ -11,16 +9,23 @@ public class UserinfoDaoImpl implements UserinfoDao{
     DBUtil dbutil = new DBUtil();
     ResultSet resultSet =null;
     PreparedStatement preparedStatement = null;
-    public int login(String username, String password) throws Exception{
-        int result = 0;
+    public UserinfoBean login(String account, String password) throws Exception{
+        UserinfoBean result = null;
         connection = dbutil.getConnection();
-        String sql = "select count(*) from userinfo where username=? and password=?";
+        String sql = "select * from userinfo where account=? and password=?";
         preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, username);
+        preparedStatement.setString(1, account);
         preparedStatement.setString(2, password);
         resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
-            result = resultSet.getInt(1);
+            result = new UserinfoBean(
+                    resultSet.getInt("userid"),
+                    resultSet.getString("account"),
+                    resultSet.getString("password"),
+                    resultSet.getString("username"),
+                    resultSet.getInt("phone"),
+                    resultSet.getBoolean("issubscribe")
+            );
         }
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return result;
@@ -28,9 +33,9 @@ public class UserinfoDaoImpl implements UserinfoDao{
     public int registerUserinfo(UserinfoBean userinfoBean) throws Exception {
         int result = 0;
         connection = dbutil.getConnection();
-        String sql = "insert into userinfo (username, password) values (?,?)";
+        String sql = "insert into userinfo (account, password) values (?,?)";
         preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, userinfoBean.getUsername());
+        preparedStatement.setString(1, userinfoBean.getAccount());
         preparedStatement.setString(2, userinfoBean.getPassword());
         result = preparedStatement.executeUpdate();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);

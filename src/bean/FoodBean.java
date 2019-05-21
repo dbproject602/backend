@@ -1,6 +1,8 @@
 package bean;
 
-public class FoodBean {
+import java.io.Serializable;
+
+public class FoodBean implements Serializable {
     private String foodname;
     private int price;
 

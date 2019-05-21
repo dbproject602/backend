@@ -48,11 +48,11 @@ public class RegisterServlet extends HttpServlet {
                 request.setAttribute("msg_con_password", "Two password is not same");
                 request.setAttribute("con_password", "");
                 request.getRequestDispatcher("register.jsp").forward(request, response);
-            }else{
+            }else{/*
                 System.out.println("Success");
                 UserinfoService userinfoService=new UserinfoServiceImpl();
                 UserinfoBean userinfoBean=new UserinfoBean();
-                userinfoBean.setUsername(username);
+                userinfoBean.setAccount(username);
                 userinfoBean.setPassword(password);
                 int result=userinfoService.registerUserinfo(userinfoBean);
                 System.out.println("In servlet"+result);
@@ -64,9 +64,11 @@ public class RegisterServlet extends HttpServlet {
                     request.setAttribute("msg", "Register is failed");
                     request.getRequestDispatcher("register.jsp").forward(request, response);
                 }
+                */}
                 }
-                }
+
             }
         }
+
     }
 
