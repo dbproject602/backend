@@ -1,7 +1,11 @@
 package servlet;
 import javax.servlet.http.*;
 import javax.servlet.*;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+
 import service.*;
 @javax.servlet.annotation.WebServlet(name = "LoginServlet")
 public class LoginServlet extends javax.servlet.http.HttpServlet {
@@ -28,11 +32,30 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         } else {
             System.out.println("success");
             UserinfoService userinfoservice = new UserinfoServiceImpl();
+
             int result = 0;
             result = userinfoservice.login(username, password);
             if (result == 1) {
                 System.out.println("visiting database successfully");
-                request.getRequestDispatcher("BookServlet").forward(request, response);
+             //   request.getRequestDispatcher("BookServlet").forward(request, response);
+                // 传递Object
+                byte[] bytes = null;
+                Object obj = true;
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                try {
+                    ObjectOutputStream oos = new ObjectOutputStream(bos);
+                    oos.writeObject(obj); //
+                    oos.flush();
+                    bytes = bos.toByteArray ();
+                    oos.close();
+                    bos.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                ServletOutputStream out = response.getOutputStream();
+                out.write(bytes);
+                out.flush();
+                //
             } else {
                 request.setAttribute("msg", "the username or password is wrong");
                 request.getRequestDispatcher("login.jsp").forward(request, response); }

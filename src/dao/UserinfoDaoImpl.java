@@ -11,7 +11,6 @@ public class UserinfoDaoImpl implements UserinfoDao{
     DBUtil dbutil = new DBUtil();
     ResultSet resultSet =null;
     PreparedStatement preparedStatement = null;
-    @Override
     public int login(String username, String password) throws Exception{
         int result = 0;
         connection = dbutil.getConnection();

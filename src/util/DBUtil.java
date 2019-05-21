@@ -6,10 +6,10 @@ import java.sql.ResultSet;
 public class DBUtil {
     public Connection getConnection() throws Exception{
         Connection connection=null;
-        String diverClass="com.mysql.jdbc.Driver";
-        String url="jdbc:mysql://localhost:3306/mvcproject";
+        String diverClass="com.mysql.cj.jdbc.Driver";
+        String url="jdbc:mysql://localhost:3306/CS307";
         String name="root";
-        String password="12345678";
+        String password="che1998530";
         Class.forName(diverClass);
         connection=DriverManager.getConnection(url,name,password);
         return connection;
