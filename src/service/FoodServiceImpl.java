@@ -1,6 +1,5 @@
 package service;
 
-import bean.BookBean;
 import bean.FoodBean;
 import dao.FoodDao;
 import dao.FoodDaoImpl;

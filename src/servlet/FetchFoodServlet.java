@@ -1,9 +1,6 @@
 package servlet;
 
-import bean.BookBean;
 import bean.FoodBean;
-import service.BookService;
-import service.BookServiceImpl;
 import service.FoodService;
 import service.FoodServiceImpl;
 import util.ObjToBytes;
@@ -14,9 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.List;
 
 @WebServlet(name = "FoodServlet")
