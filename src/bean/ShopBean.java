@@ -1,71 +1,145 @@
 package bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class ShopBean implements Serializable {
-    private String name;
-    private double x_loc;
-    private double y_loc;
-    private double rate;
-    private String location;
-    private int phone;
-    // private Url ImageUrl;
+    private int shopId;
+    private String shopName;
+    private String password;
+    private int shopType;
+    private String telephone;
+    private String address;
+    private boolean isOpen;
+    private double reputation;
+    private double sendRange;
+    private double longitude;
+    private double latitude;
+    private ArrayList<FoodBean> foodItems;
+    private ArrayList<Integer> senderIdItems;
 
-    public ShopBean(String name, double x_loc, double y_loc, double rate, String location, int phone) {
-        this.name = name;
-        this.x_loc = x_loc;
-        this.y_loc = y_loc;
-        this.rate = rate;
-        this.location = location;
-        this.phone = phone;
+    public ShopBean(int shopId, String shopName, String password, int shopType, String telephone,
+                    String address, boolean isOpen, double reputation, double sendRange,
+                    double longitude, double latitude, ArrayList<FoodBean> foodItems, ArrayList<Integer> senderIdItems) {
+        this.shopId = shopId;
+        this.shopName = shopName;
+        this.password = password;
+        this.shopType = shopType;
+        this.telephone = telephone;
+        this.address = address;
+        this.isOpen = isOpen;
+        this.reputation = reputation;
+        this.sendRange = sendRange;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.foodItems = foodItems;
+        this.senderIdItems = senderIdItems;
     }
 
-    public String getName() {
-        return name;
+    public ArrayList<FoodBean> getFoodItems() {
+        return foodItems;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFoodItems(ArrayList<FoodBean> foodItems) {
+        this.foodItems = foodItems;
     }
 
-    public double getX_loc() {
-        return x_loc;
+    public ArrayList<Integer> getSenderIdItems() {
+        return senderIdItems;
     }
 
-    public void setX_loc(double x_loc) {
-        this.x_loc = x_loc;
+    public void setSenderIdItems(ArrayList<Integer> senderIdItems) {
+        this.senderIdItems = senderIdItems;
     }
 
-    public double getY_loc() {
-        return y_loc;
+    public int getShopId() {
+        return shopId;
     }
 
-    public void setY_loc(double y_loc) {
-        this.y_loc = y_loc;
+    public void setShopId(int shopId) {
+        this.shopId = shopId;
     }
 
-    public double getRate() {
-        return rate;
+    public String getShopName() {
+        return shopName;
     }
 
-    public void setRate(double rate) {
-        this.rate = rate;
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 
-    public String getLocation() {
-        return location;
+    public String getPassword() {
+        return password;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public int getPhone() {
-        return phone;
+    public int getShopType() {
+        return shopType;
     }
 
-    public void setPhone(int phone) {
-        this.phone = phone;
+    public void setShopType(int shopType) {
+        this.shopType = shopType;
     }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public boolean isOpen() {
+        return isOpen;
+    }
+
+    public void setOpen(boolean open) {
+        isOpen = open;
+    }
+
+    public double getReputation() {
+        return reputation;
+    }
+
+    public void setReputation(double reputation) {
+        this.reputation = reputation;
+    }
+
+    public double getSendRange() {
+        return sendRange;
+    }
+
+    public void setSendRange(double sendRange) {
+        this.sendRange = sendRange;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+
 }
 

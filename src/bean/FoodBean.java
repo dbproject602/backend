@@ -3,27 +3,68 @@ package bean;
 import java.io.Serializable;
 
 public class FoodBean implements Serializable {
-    private String foodname;
-    private int price;
+    private int foodId;
+    private String foodName;
+    private int shopId;
+    private double price;
+    private int remaining;
+    private double reputation;
 
-    public String getName() {
-        return foodname;
+    public FoodBean(int foodId, String foodName, int shopId, double price, int remaining, double reputation) {
+        this.foodId = foodId;
+        this.foodName = foodName;
+        this.shopId = shopId;
+        this.price = price;
+        this.remaining = remaining;
+        this.reputation = reputation;
     }
 
-    public void setName(String name) {
-        this.foodname = name;
+    public int getFoodId() {
+        return foodId;
     }
 
-    public int getPrice() {
+    public void setFoodId(int foodId) {
+        this.foodId = foodId;
+    }
+
+    public String getFoodName() {
+        return foodName;
+    }
+
+    public void setFoodName(String foodName) {
+        this.foodName = foodName;
+    }
+
+    public int getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(int shopId) {
+        this.shopId = shopId;
+    }
+
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public FoodBean(String name, int price) {
-        this.foodname = name;
-        this.price = price;
+    public int getRemaining() {
+        return remaining;
     }
+
+    public void setRemaining(int remaining) {
+        this.remaining = remaining;
+    }
+
+    public double getReputation() {
+        return reputation;
+    }
+
+    public void setReputation(double reputation) {
+        this.reputation = reputation;
+    }
+
 }
