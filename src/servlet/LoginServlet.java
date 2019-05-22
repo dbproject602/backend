@@ -40,7 +40,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         } else {
             System.out.println("false");
             byte[] bytes = null;
-            Object obj = 1;
+            Object obj = null;
             bytes = ObjToBytes.objtobytes(obj);
             ServletOutputStream out = response.getOutputStream();
             out.write(bytes);
