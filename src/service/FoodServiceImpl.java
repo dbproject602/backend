@@ -28,7 +28,4 @@ public class FoodServiceImpl implements FoodService {
     public int addFood(FoodBean bookBean){
         return 1;
     }
-    public List<FoodBean> searchFoodList(String bookName,String author){
-        return null;
-    }
 }

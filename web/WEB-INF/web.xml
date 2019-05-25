@@ -24,46 +24,6 @@
         <url-pattern>/RegisterServlet</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>BookServlet</servlet-name>
-        <servlet-class>servlet.BookServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>BookServlet</servlet-name>
-        <url-pattern>/BookServlet</url-pattern>
-    </servlet-mapping>
-    <servlet>
-    <servlet-name>DeleteBookServlet</servlet-name>
-    <servlet-class>servlet.DeleteBookServlet</servlet-class>
-</servlet>
-    <servlet-mapping>
-        <servlet-name>DeleteBookServlet</servlet-name>
-        <url-pattern>/DeleteBookServlet</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>UpdateBookServlet</servlet-name>
-        <servlet-class>servlet.UpdateBookServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UpdateBookServlet</servlet-name>
-        <url-pattern>/UpdateBookServlet</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>AddBookServlet</servlet-name>
-        <servlet-class>servlet.AddBookServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AddBookServlet</servlet-name>
-        <url-pattern>/AddBookServlet</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>SearchBookServlet</servlet-name>
-        <servlet-class>servlet.SearchBookServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>SearchBookServlet</servlet-name>
-        <url-pattern>/SearchBookServlet</url-pattern>
-    </servlet-mapping>
-    <servlet>
         <servlet-name>FetchFoodServlet</servlet-name>
         <servlet-class>servlet.FetchFoodServlet</servlet-class>
     </servlet>

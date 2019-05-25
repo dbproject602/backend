@@ -6,20 +6,15 @@ public class UserServiceImpl implements UserService {
     public UserBean login(String username, String password) {
         UserBean result = null;
         try{
-            result=userDao.login(username,password);
+            result=userDao.fetchUser(username,password);
         }catch(Exception e){
             e.printStackTrace();
         }
         return result;
     }
-    public int registerUser(UserBean userinfoBean) {
+    public int registerUser(UserBean userBean) {
         int result=0;
-        try{
-            //result=userinfoDao.registerUserinfo(userinfoBean);
 
-        }catch(Exception e){
-            e.printStackTrace();
-        }
         return result;
     }
 }

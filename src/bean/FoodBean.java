@@ -8,7 +8,7 @@ public class FoodBean implements Serializable {
     private int shopId;
     private double price;
     private int remaining;
-
+    // 食物不需要评级
     public FoodBean(int foodId, String foodName, int shopId, double price, int remaining) {
         this.foodId = foodId;
         this.foodName = foodName;

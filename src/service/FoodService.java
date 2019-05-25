@@ -10,5 +10,4 @@ public interface FoodService {
     int deleteFoodById(int id);
     int updateFood(FoodBean bookBean);
     int addFood(FoodBean bookBean);
-    List<FoodBean> searchFoodList(String bookName,String author);
 }
