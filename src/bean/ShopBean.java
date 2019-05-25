@@ -15,13 +15,13 @@ public class ShopBean implements Serializable {
     private double sendRange;
     private double longitude;
     private double latitude;
-    private ArrayList<FoodBean> foodItems;
+    private ArrayList<Integer> foodItems;
     private ArrayList<Integer> senderIdItems;
 
 
     public ShopBean(int shopId, String shopName, String password, int shopType, String telephone,
                     String address, boolean isOpen, double reputation, double sendRange,
-                    double longitude, double latitude, ArrayList<FoodBean> foodItems, ArrayList<Integer> senderIdItems) {
+                    double longitude, double latitude, ArrayList<Integer> foodItems, ArrayList<Integer> senderIdItems) {
         this.shopId = shopId;
         this.shopName = shopName;
         this.password = password;
@@ -37,11 +37,11 @@ public class ShopBean implements Serializable {
         this.senderIdItems = senderIdItems;
     }
 
-    public ArrayList<FoodBean> getFoodItems() {
+    public ArrayList<Integer> getFoodItems() {
         return foodItems;
     }
 
-    public void setFoodItems(ArrayList<FoodBean> foodItems) {
+    public void setFoodItems(ArrayList<Integer> foodItems) {
         this.foodItems = foodItems;
     }
 
