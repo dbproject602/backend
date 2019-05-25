@@ -25,8 +25,11 @@ public class FoodDaoImpl implements FoodDao{
         foodBeanList=new ArrayList<FoodBean>();
         while(resultSet.next()){
             FoodBean foodBean = new FoodBean(
+                    resultSet.getInt("foodid"),
                     resultSet.getString("foodname"),
-                    resultSet.getInt("price")
+                    resultSet.getInt("shopid"),
+                    resultSet.getInt("price"),
+                    resultSet.getInt("remaining")
             );
             foodBeanList.add(foodBean);
         }

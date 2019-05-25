@@ -1,8 +1,9 @@
 package bean;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class DiscountBean {
+public class DiscountBean implements Serializable {
     private int discountId;
     private int shopId;
     private int foodId;

@@ -1,8 +1,9 @@
 package bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SenderBean {
+public class SenderBean implements Serializable {
     private int senderId;
     private String senderName;
     private String password;

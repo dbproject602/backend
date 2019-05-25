@@ -18,6 +18,7 @@ public class ShopBean implements Serializable {
     private ArrayList<FoodBean> foodItems;
     private ArrayList<Integer> senderIdItems;
 
+
     public ShopBean(int shopId, String shopName, String password, int shopType, String telephone,
                     String address, boolean isOpen, double reputation, double sendRange,
                     double longitude, double latitude, ArrayList<FoodBean> foodItems, ArrayList<Integer> senderIdItems) {

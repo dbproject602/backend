@@ -18,14 +18,14 @@ public class UserDaoImpl implements UserDao{
         preparedStatement.setString(2, password);
         resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
-            /*result = new UserBean(
+            result = new UserBean(
                     resultSet.getInt("userid"),
-                    resultSet.getString("account"),
-                    resultSet.getString("password"),
                     resultSet.getString("username"),
-                    resultSet.getInt("phone"),
-                    resultSet.getBoolean("issubscribe")
-            );*/
+                    resultSet.getString("password"),
+                    resultSet.getString("telephone"),
+                    resultSet.getString("address"),
+                    resultSet.getString("name")
+            );
         }
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return result;

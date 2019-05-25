@@ -8,13 +8,24 @@ public class UserBean implements Serializable {
     private String password;
     private String telephone;
     private String address;
+    private String name;   //用户的名字
 
-    public UserBean(int userId, String userName, String password, String telephone, String address) {
+
+    public UserBean(int userId, String userName, String password, String telephone, String address,String name) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
         this.telephone = telephone;
         this.address = address;
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getUserId() {

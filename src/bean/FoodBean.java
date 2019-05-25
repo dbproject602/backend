@@ -8,15 +8,13 @@ public class FoodBean implements Serializable {
     private int shopId;
     private double price;
     private int remaining;
-    private double reputation;
 
-    public FoodBean(int foodId, String foodName, int shopId, double price, int remaining, double reputation) {
+    public FoodBean(int foodId, String foodName, int shopId, double price, int remaining) {
         this.foodId = foodId;
         this.foodName = foodName;
         this.shopId = shopId;
         this.price = price;
         this.remaining = remaining;
-        this.reputation = reputation;
     }
 
     public int getFoodId() {
@@ -59,12 +57,5 @@ public class FoodBean implements Serializable {
         this.remaining = remaining;
     }
 
-    public double getReputation() {
-        return reputation;
-    }
-
-    public void setReputation(double reputation) {
-        this.reputation = reputation;
-    }
 
 }

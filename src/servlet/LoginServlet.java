@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
-import bean.UserinfoBean;
+import bean.UserBean;
 import service.*;
 import util.ObjToBytes;
 
@@ -18,17 +18,16 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        String account = request.getParameter("account");
+        String username = request.getParameter("account");
         String password = request.getParameter("password");
 
         System.out.println("success");
-        UserinfoService userinfoservice = new UserinfoServiceImpl();
+        UserService userservice = new UserServiceImpl();
 
-        UserinfoBean result = null;
-        result = userinfoservice.login(account, password);
-        if (result.getId() == 1) {
+        UserBean result = null;
+        result = userservice.login(username, password);
+        if (result!=null) {
             System.out.println("visiting database successfully");
-         //   request.getRequestDispatcher("BookServlet").forward(request, response);
             // 传递Object
             byte[] bytes = null;
             Object obj = result;
