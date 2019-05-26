@@ -8,8 +8,8 @@
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
     <servlet>
-            <servlet-name>LoginServlet</servlet-name>
-    <servlet-class>servlet.LoginServlet</servlet-class>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>servlet.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -30,5 +30,21 @@
     <servlet-mapping>
         <servlet-name>FetchFoodServlet</servlet-name>
         <url-pattern>/FetchFoodServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>FetchDiscountServlet</servlet-name>
+        <servlet-class>servlet.FetchDiscountServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FetchDiscountServlet</servlet-name>
+        <url-pattern>/FetchDiscountServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>FetchOrderServlet</servlet-name>
+        <servlet-class>servlet.FetchOrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FetchOrderServlet</servlet-name>
+        <url-pattern>/FetchOrderServlet</url-pattern>
     </servlet-mapping>
 </web-app>

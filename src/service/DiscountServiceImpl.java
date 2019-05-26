@@ -9,10 +9,10 @@ import dao.DiscountDaoImpl;
 public class DiscountServiceImpl implements DiscountService {
     DiscountDao discountDao = new DiscountDaoImpl();
 
-    public List<DiscountBean> fetchShopList(int shopId){
+    public List<DiscountBean> fetchDiscountList(int shopId){
         List<DiscountBean> discountList = null;
         try{
-            discountList = discountDao.fetchShopList(shopId);
+            discountList = discountDao.fetchDiscountList(shopId);
         }
         catch(Exception e){
             e.printStackTrace();
