@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShopDaoImpl implements ShopDao {
-    Connection connection = null;
-    DBUtil dbutil = new DBUtil();
-    ResultSet resultSet = null;
-    PreparedStatement preparedStatement = null;
+    private Connection connection = null;
+    private DBUtil dbutil = new DBUtil();
+    private ResultSet resultSet = null;
+    private PreparedStatement preparedStatement = null;
 
     private ShopBean parseResultSet(ResultSet resultSet) throws Exception{
         int shopId = resultSet.getInt("shopid");
@@ -58,6 +58,20 @@ public class ShopDaoImpl implements ShopDao {
         return list;
     }
 
+    public ShopBean fetchShop(String shopName) throws Exception{
+        ShopBean result = null;
+        connection = dbutil.getConnection();
+
+        String sql = "select * from shops s where shopname = ?";
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, shopName);
+
+        while (resultSet.next()){
+            result = parseResultSet(resultSet);
+        }
+        return result;
+    }
+
     public int deleteShopById(int shopId) throws Exception {
         return 0;
     }
@@ -87,6 +101,6 @@ public class ShopDaoImpl implements ShopDao {
 
         result = preparedStatement.executeUpdate();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
-        return 0;
+        return result;
     }
 }
