@@ -1,5 +1,6 @@
 package dao;
 
+import bean.FoodBean;
 import bean.SenderBean;
 import bean.ShopBean;
 import util.DBUtil;
@@ -16,27 +17,13 @@ public class ShopDaoImpl implements ShopDao {
     ResultSet resultSet = null;
     PreparedStatement preparedStatement = null;
 
-    private ArrayList<Integer> getItems(String sql) throws Exception{
-        ArrayList<Integer> list = new ArrayList<Integer>();
-
-        Connection connection = dbutil.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        while (resultSet.next()){
-            list.add(resultSet.getInt(1));
-        }
-
-        return list;
-    }
-
     private ShopBean parseResultSet(ResultSet resultSet) throws Exception{
-        String sql = "select foodid from food f where f.shopid = "
-                + String.valueOf(resultSet.getInt("shopid"));
-        ArrayList<Integer> foodItems = getItems(sql);
-        sql = "select foodid from shops_senders ss where ss.shopid = "
-                + String.valueOf(resultSet.getInt("shopid"));
-        ArrayList<Integer> senderItems = getItems(sql);
+        int shopId = resultSet.getInt("shopid");
+
+        FoodDao foodDao = new FoodDaoImpl();
+        List<FoodBean> foodItems = foodDao.fetchFoodList(shopId);
+
+        List<SenderBean> senderItems = new ArrayList<SenderBean>();
         return new ShopBean(
                 resultSet.getInt("shopid"),
                 resultSet.getString("shopname"),

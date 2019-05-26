@@ -20,12 +20,30 @@ public class FoodServiceImpl implements FoodService {
         return foodList;
     }
     public int deleteFoodById(int id){
+        try{
+            foodDao.deleteFoodById(id);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         return 1;
     }
     public int updateFood(FoodBean bookBean){
+        try{
+            foodDao.updateFood(bookBean);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         return 1;
     }
     public int addFood(FoodBean bookBean){
+        try{
+            foodDao.addFood(bookBean);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         return 1;
     }
 }

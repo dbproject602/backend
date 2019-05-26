@@ -1,32 +1,20 @@
 package dao;
 
 import bean.SenderBean;
+import bean.ShopBean;
 import util.DBUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SenderDaoImpl implements SenderDao {
     Connection connection = null;
     DBUtil dbutil = new DBUtil();
     ResultSet resultSet = null;
     PreparedStatement preparedStatement = null;
-
-    private ArrayList<Integer> getItems(String sql) throws Exception{
-        ArrayList<Integer> list = new ArrayList<Integer>();
-
-        Connection connection = dbutil.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        while (resultSet.next()){
-            list.add(resultSet.getInt(1));
-        }
-
-        return list;
-    }
 
     public SenderBean fetchSender(int senderId) throws Exception {
         SenderBean result = null;
@@ -37,11 +25,7 @@ public class SenderDaoImpl implements SenderDao {
         resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
-            ArrayList<Integer> shopIdItems =
-                    getItems(
-                            "select shopid from shops_senders ss where ss.senderid = "
-                                    + String.valueOf(resultSet.getInt("senderid"))
-                    );
+            List<ShopBean> shopItems = new ArrayList<ShopBean>();
             result = new SenderBean(
                     resultSet.getInt("senderid"),
                     resultSet.getString("sendername"),
@@ -49,7 +33,7 @@ public class SenderDaoImpl implements SenderDao {
                     resultSet.getInt("state"),
                     resultSet.getString("telephone"),
                     resultSet.getDouble("reputation"),
-                    shopIdItems
+                    shopItems
             );
         }
         dbutil.closeDBResource(connection, preparedStatement, resultSet);

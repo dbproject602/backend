@@ -3,7 +3,7 @@ package servlet;
 import bean.FoodBean;
 import service.FoodService;
 import service.FoodServiceImpl;
-import util.ObjToBytes;
+import util.codingutil;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -22,7 +22,7 @@ public class FetchFoodServlet extends HttpServlet {
         FoodService foodService=new FoodServiceImpl();
         int shopid= Integer.parseInt(request.getParameter("shopid"));
         List<FoodBean> foodList = foodService.fetchFoodList(shopid);
-        byte[] bytes = ObjToBytes.objtobytes(foodList);
+        byte[] bytes = codingutil.objtobytes(foodList);
         ServletOutputStream out = response.getOutputStream();
         out.write(bytes);
         out.flush();
