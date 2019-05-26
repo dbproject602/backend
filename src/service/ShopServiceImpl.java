@@ -8,9 +8,9 @@ import java.util.List;
 public class ShopServiceImpl implements ShopService {
     private ShopDao shopDao = new ShopDaoImpl();
 
-    public ShopBean login(String shopName, String password) throws Exception {
+    public ShopBean fetchShop(String shopName) throws Exception {
         ShopBean shopBean = null;
-        shopBean = shopDao.fetchShop(shopName, password);
+        shopBean = shopDao.fetchShop(shopName);
         return shopBean;
     }
 

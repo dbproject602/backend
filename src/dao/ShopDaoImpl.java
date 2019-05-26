@@ -58,7 +58,7 @@ public class ShopDaoImpl implements ShopDao {
         return list;
     }
 
-    public ShopBean fetchShop(String shopName, String password) throws Exception{
+    public ShopBean fetchShop(String shopName) throws Exception{
         ShopBean result = null;
         connection = dbutil.getConnection();
 
