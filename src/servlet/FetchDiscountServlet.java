@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,7 +16,7 @@ import service.DiscountServiceImpl;
 import util.codingutil;
 
 @WebServlet(name = "FetchDiscountServlet")
-public class FetchDiscountServlet {
+public class FetchDiscountServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("get it");
         request.setCharacterEncoding("UTF-8");

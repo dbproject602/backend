@@ -47,4 +47,20 @@
         <servlet-name>FetchOrderServlet</servlet-name>
         <url-pattern>/FetchOrderServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>FetchShopServlet</servlet-name>
+        <servlet-class>servlet.FetchShopServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FetchShopServlet</servlet-name>
+        <url-pattern>/FetchShopServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>FetchShopListServlet</servlet-name>
+        <servlet-class>servlet.FetchShopListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FetchShopListServlet</servlet-name>
+        <url-pattern>/FetchShopListServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
