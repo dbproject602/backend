@@ -35,17 +35,14 @@ public class RegisterServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        if (flag==0) {
-            System.out.println("false");
-            ServletOutputStream out = response.getOutputStream();
-            out.write(flag);
-            out.flush();
-        } else {
-            System.out.println("success");
-            ServletOutputStream out = response.getOutputStream();
-            out.write(flag);
-            out.flush();
+        if(flag!=0){
+            System.out.println("sucess");
+        }else{
+            System.out.println("null");
         }
+        response.getWriter().print(1);
+        response.flushBuffer();
+
 
     }
 
