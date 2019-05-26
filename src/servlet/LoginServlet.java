@@ -6,7 +6,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServlet;
 import bean.UserBean;
 import service.*;
-import util.ObjToBytes;
+import util.codingutil;
 
 @WebServlet(name = "LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
             // 传递Object
             byte[] bytes = null;
             Object obj = result;
-            bytes = ObjToBytes.objtobytes(obj);
+            bytes = codingutil.objtobytes(obj);
             ServletOutputStream out = response.getOutputStream();
             out.write(bytes);
             out.flush();
@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
             System.out.println("false");
             byte[] bytes = null;
             Object obj = null;
-            bytes = ObjToBytes.objtobytes(obj);
+            bytes = codingutil.objtobytes(obj);
             ServletOutputStream out = response.getOutputStream();
             out.write(bytes);
             out.flush();
