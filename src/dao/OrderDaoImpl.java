@@ -33,7 +33,7 @@ public class OrderDaoImpl implements OrderDao {
             Date e = resultSet.getDate("starttime");
             Date f = resultSet.getDate("endtime");
             String g =  resultSet.getString("fooditems");
-            String h = resultSet.getString("status");
+            String h = resultSet.getString("state");
             ArrayList<FoodBean> list = new ArrayList<FoodBean>();
             List<String> foodlist = Arrays.asList(g.split(","));
             for(String s: foodlist){
@@ -61,7 +61,7 @@ public class OrderDaoImpl implements OrderDao {
     }
     public int updateOrder(OrderBean bookBean) throws Exception{
         connection = dbutil.getConnection();
-        String sql = "update order set userid=?, shopid=?, senderid=?, starttime=?, endtime=?, fooditems=?, status=? where orderid=?";
+        String sql = "update order set userid=?, shopid=?, senderid=?, starttime=?, endtime=?, fooditems=?, state=? where orderid=?";
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setInt(1,bookBean.getUserId());
         preparedStatement.setInt(2,bookBean.getShopId());
@@ -77,20 +77,19 @@ public class OrderDaoImpl implements OrderDao {
         list = list.substring(0,list.length()-1);
 
         preparedStatement.setString(6,list);
-        preparedStatement.setString(7,bookBean.getStatus());
+        preparedStatement.setString(7,bookBean.getState());
         resultSet=preparedStatement.executeQuery();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return 1;
     }
     public int addOrder(OrderBean bookBean) throws  Exception{
-        String sql = "insert into order (orderid, userid, shopid, senderid, starttime, endtime, fooditems, status) values(?,?,?,?,?,?,?,?)";
+        String sql = "insert into order (userid, shopid, senderid, starttime, endtime, fooditems, state) values(?,?,?,?,?,?,?)";
         preparedStatement=connection.prepareStatement(sql);
-        preparedStatement.setInt(1,bookBean.getOrderId());
-        preparedStatement.setInt(2,bookBean.getUserId());
-        preparedStatement.setInt(3,bookBean.getShopId());
-        preparedStatement.setInt(4,bookBean.getSenderId());
-        preparedStatement.setDate(5,bookBean.getStartTime());
-        preparedStatement.setDate(6,bookBean.getEndTime());
+        preparedStatement.setInt(1,bookBean.getUserId());
+        preparedStatement.setInt(2,bookBean.getShopId());
+        preparedStatement.setInt(3,bookBean.getSenderId());
+        preparedStatement.setDate(4,bookBean.getStartTime());
+        preparedStatement.setDate(5,bookBean.getEndTime());
 
         String list = "";
         ArrayList<FoodBean> foodlist = bookBean.getFoodItems();
@@ -100,7 +99,7 @@ public class OrderDaoImpl implements OrderDao {
         list = list.substring(0,list.length()-1);
 
         preparedStatement.setString(7,list);
-        preparedStatement.setString(8,bookBean.getStatus());
+        preparedStatement.setString(8,bookBean.getState());
         resultSet=preparedStatement.executeQuery();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return 1;
