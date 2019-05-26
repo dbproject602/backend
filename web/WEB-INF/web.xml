@@ -7,6 +7,7 @@
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
+
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>servlet.LoginServlet</servlet-class>
@@ -15,6 +16,7 @@
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>servlet.RegisterServlet</servlet-class>
@@ -23,6 +25,7 @@
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>FetchFoodServlet</servlet-name>
         <servlet-class>servlet.FetchFoodServlet</servlet-class>
@@ -31,6 +34,7 @@
         <servlet-name>FetchFoodServlet</servlet-name>
         <url-pattern>/FetchFoodServlet</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>FetchDiscountServlet</servlet-name>
         <servlet-class>servlet.FetchDiscountServlet</servlet-class>
@@ -39,6 +43,7 @@
         <servlet-name>FetchDiscountServlet</servlet-name>
         <url-pattern>/FetchDiscountServlet</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>FetchOrderServlet</servlet-name>
         <servlet-class>servlet.FetchOrderServlet</servlet-class>
@@ -47,6 +52,7 @@
         <servlet-name>FetchOrderServlet</servlet-name>
         <url-pattern>/FetchOrderServlet</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>FetchShopServlet</servlet-name>
         <servlet-class>servlet.FetchShopServlet</servlet-class>
@@ -55,6 +61,7 @@
         <servlet-name>FetchShopServlet</servlet-name>
         <url-pattern>/FetchShopServlet</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>FetchShopListServlet</servlet-name>
         <servlet-class>servlet.FetchShopListServlet</servlet-class>
@@ -62,5 +69,86 @@
     <servlet-mapping>
         <servlet-name>FetchShopListServlet</servlet-name>
         <url-pattern>/FetchShopListServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddDiscountServlet</servlet-name>
+        <servlet-class>servlet.AddDiscountServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddDiscountServlet</servlet-name>
+        <url-pattern>/AddDiscountServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddFoodServlet</servlet-name>
+        <servlet-class>servlet.AddFoodServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddFoodServlet</servlet-name>
+        <url-pattern>/AddFoodServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddOrderServlet</servlet-name>
+        <servlet-class>servlet.AddOrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddOrderServlet</servlet-name>
+        <url-pattern>/AddOrderServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeleteDiscountServlet</servlet-name>
+        <servlet-class>servlet.DeleteDiscountServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteDiscountServlet</servlet-name>
+        <url-pattern>/DeleteDiscountServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeleteFoodServlet</servlet-name>
+        <servlet-class>servlet.DeleteFoodServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteFoodServlet</servlet-name>
+        <url-pattern>/DeleteFoodServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeleteOrderServlet</servlet-name>
+        <servlet-class>servlet.DeleteOrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteOrderServlet</servlet-name>
+        <url-pattern>/DeleteOrderServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdateDiscountServlet</servlet-name>
+        <servlet-class>servlet.UpdateDiscountServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateDiscountServlet</servlet-name>
+        <url-pattern>/UpdateDiscountServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdateFoodServlet</servlet-name>
+        <servlet-class>servlet.UpdateFoodServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateFoodServlet</servlet-name>
+        <url-pattern>/UpdateFoodServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdateOrderServlet</servlet-name>
+        <servlet-class>servlet.UpdateOrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateOrderServlet</servlet-name>
+        <url-pattern>/UpdateOrderServlet</url-pattern>
     </servlet-mapping>
 </web-app>
