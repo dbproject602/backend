@@ -21,10 +21,10 @@ public class RegisterServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         int flag = 0;
-        String str = request.getParameter("userBean");
+        String str = request.getParameter("userBean");  //获取userBean
         UserBean result = null;
         try {
-            result = (UserBean) codingutil.stringtoObj(str);
+            result = (UserBean) codingutil.stringtoObj(str); //反序列化其转成UserBean
         } catch (Exception e) {
             e.printStackTrace();
         }
