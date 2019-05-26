@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import bean.DiscountBean;
 import service.DiscountService;
 import service.DiscountServiceImpl;
-import util.ObjToBytes;
+import util.codingutil;
 
 @WebServlet(name = "FetchDiscountServlet")
 public class FetchDiscountServlet {
@@ -22,7 +22,7 @@ public class FetchDiscountServlet {
         DiscountService discountService=new DiscountServiceImpl();
         int shopid= Integer.parseInt(request.getParameter("shopid"));
         List<DiscountBean> discountList = discountService.fetchDiscountList(shopid);
-        byte[] bytes = ObjToBytes.objtobytes(discountList);
+        byte[] bytes = codingutil.objtobytes(discountList);
         ServletOutputStream out = response.getOutputStream();
         out.write(bytes);
         out.flush();
