@@ -12,20 +12,25 @@ public class UserDaoImpl implements UserDao{
     public UserBean fetchUser(String account, String password) throws Exception{
         UserBean result = null;
         connection = dbutil.getConnection();
-        String sql = "select * from userinfo where account=? and password=?";
+        String sql = "select * from userinfo where username=? and password=?";
         preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, account);
         preparedStatement.setString(2, password);
-        resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            result = new UserBean(
-                    resultSet.getInt("userid"),
-                    resultSet.getString("username"),
-                    resultSet.getString("password"),
-                    resultSet.getString("telephone"),
-                    resultSet.getString("address"),
-                    resultSet.getString("name")
-            );
+        try {
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                result = new UserBean(
+                        resultSet.getInt("userid"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        resultSet.getString("telephone"),
+                        resultSet.getString("address"),
+                        resultSet.getString("name")
+                );
+            }
+        }catch (Exception e){
+            System.out.println("fail");
+            result = null;
         }
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return result;
@@ -35,14 +40,13 @@ public class UserDaoImpl implements UserDao{
     public int addUser(UserBean userinfoBean) throws Exception {
         int result = 0;
         connection = dbutil.getConnection();
-        String sql = "insert into userinfo (userid, username, password, telephone, address, name) values (?,?,?,?,?,?)";
+        String sql = "insert into userinfo (username, password, telephone, address, name) values (?,?,?,?,?)";
         preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, userinfoBean.getUserId());
-        preparedStatement.setString(2, userinfoBean.getUserName());
-        preparedStatement.setString(3, userinfoBean.getPassword());
-        preparedStatement.setString(4, userinfoBean.getTelephone());
-        preparedStatement.setString(5, userinfoBean.getAddress());
-        preparedStatement.setString(6, userinfoBean.getName());
+        preparedStatement.setString(1, userinfoBean.getUserName());
+        preparedStatement.setString(2, userinfoBean.getPassword());
+        preparedStatement.setString(3, userinfoBean.getTelephone());
+        preparedStatement.setString(4, userinfoBean.getAddress());
+        preparedStatement.setString(5, userinfoBean.getName());
         result = preparedStatement.executeUpdate();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return result;

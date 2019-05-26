@@ -1,17 +1,15 @@
 package servlet;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import javax.servlet.*;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-
+import javax.servlet.http.HttpServlet;
 import bean.UserBean;
 import service.*;
 import util.ObjToBytes;
 
-@javax.servlet.annotation.WebServlet(name = "LoginServlet")
-public class LoginServlet extends javax.servlet.http.HttpServlet {
+@WebServlet(name = "LoginServlet")
+public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
@@ -25,7 +23,11 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         UserService userservice = new UserServiceImpl();
 
         UserBean result = null;
-        result = userservice.login(username, password);
+        try {
+            result = userservice.login(username, password);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (result!=null) {
             System.out.println("visiting database successfully");
             // 传递Object
