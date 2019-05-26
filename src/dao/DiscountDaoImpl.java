@@ -14,7 +14,7 @@ public class DiscountDaoImpl implements DiscountDao {
     ResultSet resultSet = null;
     Statement statement = null;
     ResultSetMetaData metaData = null;
-    public List<DiscountBean> fetchShopList(int shopId) throws Exception{
+    public List<DiscountBean> fetchDiscountList(int shopId) throws Exception{
         List<DiscountBean> discountBeanList=null;
         connection = dbutil.getConnection();
         String sql="select * from discount where shopid=?"; //
