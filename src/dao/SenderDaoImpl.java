@@ -16,12 +16,12 @@ public class SenderDaoImpl implements SenderDao {
     ResultSet resultSet = null;
     PreparedStatement preparedStatement = null;
 
-    public SenderBean fetchSender(int senderId) throws Exception {
+    public SenderBean fetchSender(String senderName, String password) throws Exception {
         SenderBean result = null;
         connection = dbutil.getConnection();
-        String sql = "select * from senders where senderId = ?";
+        String sql = "select * from senders where sendername = ?";
         preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, String.valueOf(senderId));
+        preparedStatement.setString(1, senderName);
         resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
