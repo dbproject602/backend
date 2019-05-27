@@ -63,12 +63,30 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>FetchShopListServlet</servlet-name>
-        <servlet-class>servlet.FetchShopListServlet</servlet-class>
+        <servlet-name>FetchShopListByTypeServlet</servlet-name>
+        <servlet-class>servlet.FetchShopListByTypeServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>FetchShopListServlet</servlet-name>
-        <url-pattern>/FetchShopListServlet</url-pattern>
+        <servlet-name>FetchShopListByTypeServlet</servlet-name>
+        <url-pattern>/FetchShopListByTypeServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FetchShopListByStrServlet</servlet-name>
+        <servlet-class>servlet.FetchShopListByStrServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FetchShopListByStrServlet</servlet-name>
+        <url-pattern>/FetchShopListByStrServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FetchShopListByDisServlet</servlet-name>
+        <servlet-class>servlet.FetchShopListByDisServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FetchShopListByDisServlet</servlet-name>
+        <url-pattern>/FetchShopListByDisServlet</url-pattern>
     </servlet-mapping>
 
     <servlet>

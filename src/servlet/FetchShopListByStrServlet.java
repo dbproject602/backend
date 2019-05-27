@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "FetchShopListServlet")
-public class FetchShopListServlet extends HttpServlet {
+@WebServlet(name = "FetchShopListByStrServlet")
+public class FetchShopListByStrServlet extends HttpServlet {
 
     private ShopService shopService = new ShopServiceImpl();
 
@@ -23,10 +23,10 @@ public class FetchShopListServlet extends HttpServlet {
         //System.out.println("get it");
         request.setCharacterEncoding("UTF-8");
 
-        int shopType = Integer.parseInt(request.getParameter("shoptype"));
+        String findStr = request.getParameter("findStr");
         List<ShopBean> shopList = null;
         try {
-            shopList = shopService.fetchShopList(shopType);
+            shopList = shopService.fetchShopList(findStr);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,4 +44,5 @@ public class FetchShopListServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+
 }

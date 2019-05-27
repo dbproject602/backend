@@ -18,6 +18,14 @@ public class ShopServiceImpl implements ShopService {
         return shopDao.fetchShopList(shopType);
     }
 
+    public List<ShopBean> fetchShopList(double longitude, double latitude) throws Exception {
+        return shopDao.fetchShopList(longitude, latitude);
+    }
+
+    public List<ShopBean> fetchShopList(String findStr) throws Exception {
+        return shopDao.fetchShopList(findStr);
+    }
+
     public int registerUser(ShopBean shopBean) throws Exception {
         int result = 0;
         result = shopDao.addShop(shopBean);
