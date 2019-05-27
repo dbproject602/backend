@@ -75,6 +75,22 @@ public class ShopDaoImpl implements ShopDao {
             result.add(parseResultSet(resultSet));
         }
 
+        dbutil.closeDBResource(connection, preparedStatement, resultSet);
+        return result;
+    }
+
+    public List<ShopBean> fetchShopList(String findStr) throws Exception {
+        List<ShopBean> result = new ArrayList<ShopBean>();
+        connection = dbutil.getConnection();
+
+        String sql = "select * from shops s where s.shopname like %%?%% ";
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, findStr);
+
+        while (resultSet.next()){
+            result.add(parseResultSet(resultSet));
+        }
+
         return result;
     }
 
