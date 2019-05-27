@@ -24,7 +24,7 @@ public class FetchShopServlet {
         request.setCharacterEncoding("UTF-8");
 
         ShopService shopService = new ShopServiceImpl();
-        String shopName= request.getParameter("shopname");
+        String shopName= request.getParameter("shopname");   // ???? 用id查找
         ShopBean shop = shopService.fetchShop(shopName);
         byte[] bytes = codingutil.objtobytes(shop);
 

@@ -17,7 +17,7 @@ import java.util.List;
 @WebServlet(name = "FetchFoodServlet")
 public class FetchFoodServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("get it");
+        System.out.println("get fetchFood");
         request.setCharacterEncoding("UTF-8");
         FoodService foodService=new FoodServiceImpl();
         int shopid= Integer.parseInt(request.getParameter("shopid"));
