@@ -29,10 +29,11 @@ public class FetchShopListServlet extends HttpServlet {
             e.printStackTrace();
         }
         byte[] bytes = codingutil.objtobytes(shopList);
-
         ServletOutputStream out = response.getOutputStream();
         out.write(bytes);
         out.flush();
+        System.out.println("out put");
+
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         try {

@@ -50,7 +50,7 @@ public class ShopDaoImpl implements ShopDao {
         String sql = "select * from shops s where shoptype = ?";
         preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, shopType);
-
+        resultSet=preparedStatement.executeQuery();
         while (resultSet.next()){
             result = parseResultSet(resultSet);
             list.add(result);
