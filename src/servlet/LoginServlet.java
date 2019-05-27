@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
             e.printStackTrace();
         }
         if (result!=null) {
-            System.out.println("visiting database successfully");
+            System.out.println("Get user successfully.");
             // 传递Object
             byte[] bytes = null;
             Object obj = result;
@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
             out.flush();
             //
         } else {
-            System.out.println("false");
+            System.out.println("False");
             byte[] bytes = null;
             Object obj = null;
             bytes = codingutil.objtobytes(obj);

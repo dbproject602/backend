@@ -55,7 +55,27 @@ public class ShopDaoImpl implements ShopDao {
             result = parseResultSet(resultSet);
             list.add(result);
         }
+
+        dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return list;
+    }
+
+    public List<ShopBean> fetchShopList(double longitude, double latitude) throws Exception {
+        List<ShopBean> result = new ArrayList<ShopBean>();
+        connection = dbutil.getConnection();
+
+        String sql = "select * from shops s " +
+                "where (power((s._long_ - ?) * 2 * 3.14 * 6400 / 360, 2) + " +
+                "(power((s._lati_ - ?) * 2 * 3.14 * 6400 / 360, 2) < 4";
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setDouble(1, longitude);
+        preparedStatement.setDouble(2, latitude);
+
+        while (resultSet.next()){
+            result.add(parseResultSet(resultSet));
+        }
+
+        return result;
     }
 
     public ShopBean fetchShop(String shopName) throws Exception{
@@ -69,6 +89,8 @@ public class ShopDaoImpl implements ShopDao {
         while (resultSet.next()){
             result = parseResultSet(resultSet);
         }
+
+        dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return result;
     }
 

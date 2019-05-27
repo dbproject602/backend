@@ -1,7 +1,6 @@
 package servlet;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +35,7 @@ public class RegisterServlet extends HttpServlet {
         }
 
         if(flag!=0){
-            System.out.println("sucess");
+            System.out.println("success");
         }else{
             System.out.println("null");
         }
