@@ -80,13 +80,12 @@ public class FoodDaoImpl implements FoodDao{
 
     public int addFood(FoodBean bookBean) throws  Exception{
         connection = dbutil.getConnection();
-        String sql = "insert into food (foodid, foodname, shopid, price, remaining) values(?,?,?,?,?)";
+        String sql = "insert into food (foodname, shopid, price, remaining) values(?,?,?,?)";
         preparedStatement=connection.prepareStatement(sql);
-        preparedStatement.setInt(1,bookBean.getFoodId());
-        preparedStatement.setString(2,bookBean.getFoodName());
-        preparedStatement.setInt(3,bookBean.getShopId());
-        preparedStatement.setDouble(4,bookBean.getPrice());
-        preparedStatement.setInt(5,bookBean.getRemaining());
+        preparedStatement.setString(1,bookBean.getFoodName());
+        preparedStatement.setInt(2,bookBean.getShopId());
+        preparedStatement.setDouble(3,bookBean.getPrice());
+        preparedStatement.setInt(4,bookBean.getRemaining());
         resultSet=preparedStatement.executeQuery();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return 1;
