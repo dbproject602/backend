@@ -17,7 +17,7 @@ public class DiscountServiceImpl implements DiscountService {
         catch(Exception e){
             e.printStackTrace();
         }
-        return null;
+        return discountList;
     }
     public int deleteDiscountById(int discoutId){
         try{
