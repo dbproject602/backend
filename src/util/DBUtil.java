@@ -7,9 +7,10 @@ public class DBUtil {
     public Connection getConnection() throws Exception{
         Connection connection=null;
         String diverClass="com.mysql.cj.jdbc.Driver";
-        String url="jdbc:mysql://10.21.127.125:3306/project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-        String name="dingsiyi";
-        String password="dingsiyi";
+        String url="jdbc:mysql://localhost:3306/CS307?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+//        String url="jdbc:mysql://10.21.127.125:3306/project";
+        String name="root";
+        String password="zxccxz123";
         Class.forName(diverClass);
         connection=DriverManager.getConnection(url,name,password);
         return connection;
