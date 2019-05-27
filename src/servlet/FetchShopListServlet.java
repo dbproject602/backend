@@ -34,7 +34,7 @@ public class FetchShopListServlet extends HttpServlet {
         ServletOutputStream out = response.getOutputStream();
         out.write(bytes);
         out.flush();
-        System.out.println("out put");
+//        System.out.println("out put");
 
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {

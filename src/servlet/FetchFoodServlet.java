@@ -17,11 +17,13 @@ import java.util.List;
 @WebServlet(name = "FetchFoodServlet")
 public class FetchFoodServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("get fetchFood");
         request.setCharacterEncoding("UTF-8");
         FoodService foodService=new FoodServiceImpl();
+
         int shopid= Integer.parseInt(request.getParameter("shopid"));
+        System.out.println("get fetchshopId:"+shopid);
         List<FoodBean> foodList = foodService.fetchFoodList(shopid);
+        System.out.println("get fetchFood:"+foodList.size());
         byte[] bytes = codingutil.objtobytes(foodList);
         ServletOutputStream out = response.getOutputStream();
         out.write(bytes);

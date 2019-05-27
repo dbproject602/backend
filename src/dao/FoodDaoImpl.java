@@ -24,9 +24,9 @@ public class FoodDaoImpl implements FoodDao{
         foodBeanList=new ArrayList<FoodBean>();
         while(resultSet.next()){
             FoodBean foodBean = new FoodBean(
-                    resultSet.getInt("foodid"),
+                    resultSet.getString("foodid"),
                     resultSet.getString("foodname"),
-                    resultSet.getInt("shopid"),
+                    resultSet.getString("shopid"),
                     resultSet.getDouble("price"),
                     resultSet.getInt("remaining")
             );
@@ -43,9 +43,9 @@ public class FoodDaoImpl implements FoodDao{
         preparedStatement.setInt(1,foodid);
         resultSet=preparedStatement.executeQuery();
         FoodBean food = new FoodBean(
-                resultSet.getInt("foodid"),
+                resultSet.getString("foodid"),
                 resultSet.getString("foodname"),
-                resultSet.getInt("shopid"),
+                resultSet.getString("shopid"),
                 resultSet.getDouble("price"),
                 resultSet.getInt("remaining")
         );
@@ -69,10 +69,10 @@ public class FoodDaoImpl implements FoodDao{
         String sql = "update food set foodname = ?, shopid = ?, price = ?, remaining = ? where foodid=?";
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setString(1, bookBean.getFoodName());
-        preparedStatement.setInt(2, bookBean.getShopId());
+        preparedStatement.setString(2, bookBean.getShopId());
         preparedStatement.setDouble(3, bookBean.getPrice());
         preparedStatement.setInt(4, bookBean.getRemaining());
-        preparedStatement.setInt(5, bookBean.getFoodId());
+        preparedStatement.setString(5, bookBean.getFoodId());
         resultSet=preparedStatement.executeQuery();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return 1;
@@ -83,7 +83,7 @@ public class FoodDaoImpl implements FoodDao{
         String sql = "insert into food (foodname, shopid, price, remaining) values(?,?,?,?)";
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setString(1,bookBean.getFoodName());
-        preparedStatement.setInt(2,bookBean.getShopId());
+        preparedStatement.setString(2,bookBean.getShopId());
         preparedStatement.setDouble(3,bookBean.getPrice());
         preparedStatement.setInt(4,bookBean.getRemaining());
         resultSet=preparedStatement.executeQuery();

@@ -20,7 +20,7 @@ public class UserDaoImpl implements UserDao{
         preparedStatement.setString(2, password);
         try {
             System.out.println("Start to get user in dao.");
-            System.out.printf("username = %s, password = %s\n", account, password);
+            System.out.printf("input username = %s, password = %s\n", account, password);
 
             resultSet = preparedStatement.executeQuery();
             System.out.println("Get user resultSet in dao.");
@@ -39,6 +39,7 @@ public class UserDaoImpl implements UserDao{
             System.out.println("Finish getting user in dao!");
         }catch (Exception e){
             System.out.println("Fail to get user in dao.");
+            System.out.println(e);
             result = null;
         }
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
