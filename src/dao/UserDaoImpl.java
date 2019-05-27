@@ -13,11 +13,11 @@ public class UserDaoImpl implements UserDao{
     public UserBean fetchUser(String account, String password) throws Exception{
         UserBean result = null;
         connection = dbutil.getConnection();
-        String sql = "select * from users where username = ?";
-                //+ "and pwd = ?";
+        String sql = "select * from users where username = ?"//;
+                + "and pwd = ?";
         preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, account);
-        //preparedStatement.setString(2, password);
+        preparedStatement.setString(2, password);
         try {
             System.out.println("Start to get user in dao.");
             System.out.printf("username = %s, password = %s\n", account, password);
@@ -26,6 +26,7 @@ public class UserDaoImpl implements UserDao{
             System.out.println("Get user resultSet in dao.");
             while (resultSet.next()) {
                 result = new UserBean(
+                        resultSet.getInt("userid"),
                         resultSet.getString("username"),
                         resultSet.getString("pwd"),
                         resultSet.getString("telephone"),
