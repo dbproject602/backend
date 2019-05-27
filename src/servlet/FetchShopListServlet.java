@@ -16,11 +16,13 @@ import java.util.List;
 
 @WebServlet(name = "FetchShopListServlet")
 public class FetchShopListServlet extends HttpServlet {
+
+    private ShopService shopService = new ShopServiceImpl();
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("get it");
+        //System.out.println("get it");
         request.setCharacterEncoding("UTF-8");
 
-        ShopService shopService = new ShopServiceImpl();
         int shopType = Integer.parseInt(request.getParameter("shoptype"));
         List<ShopBean> shopList = null;
         try {

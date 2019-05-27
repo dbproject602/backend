@@ -3,7 +3,6 @@ package bean;
 import java.io.Serializable;
 
 public class UserBean implements Serializable {
-    private int userId;
     private String userName;
     private String password;
     private String telephone;
@@ -11,8 +10,7 @@ public class UserBean implements Serializable {
     private String name;   //用户的名字
 
 
-    public UserBean(int userId, String userName, String password, String telephone, String address,String name) {
-        this.userId = userId;
+    public UserBean(String userName, String password, String telephone, String address,String name) {
         this.userName = userName;
         this.password = password;
         this.telephone = telephone;
@@ -26,14 +24,6 @@ public class UserBean implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public String getUserName() {
