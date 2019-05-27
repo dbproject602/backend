@@ -63,15 +63,14 @@ public class DiscountDaoImpl implements DiscountDao {
     }
     public int addDiscount(DiscountBean bookBean) throws  Exception{
         connection = dbutil.getConnection();
-        String sql = "insert into food (discountid, shopid, foodid, discountname, starttime, endtime, discountratio) values(?,?,?,?,?,?,?)";
+        String sql = "insert into food (shopid, foodid, discountname, starttime, endtime, discountratio) values(?,?,?,?,?,?)";
         preparedStatement=connection.prepareStatement(sql);
-        preparedStatement.setInt(1,bookBean.getDiscountId());
-        preparedStatement.setInt(2, bookBean.getShopId());
-        preparedStatement.setInt(3, bookBean.getFoodId());
-        preparedStatement.setString(4, bookBean.getDiscountName());
-        preparedStatement.setDate(5, bookBean.getStartTime());
-        preparedStatement.setDate(6, bookBean.getEndTime());
-        preparedStatement.setDouble(7,bookBean.getDiscountRatio());
+        preparedStatement.setInt(1, bookBean.getShopId());
+        preparedStatement.setInt(2, bookBean.getFoodId());
+        preparedStatement.setString(3, bookBean.getDiscountName());
+        preparedStatement.setDate(4, bookBean.getStartTime());
+        preparedStatement.setDate(5, bookBean.getEndTime());
+        preparedStatement.setDouble(6,bookBean.getDiscountRatio());
         resultSet=preparedStatement.executeQuery();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return 1;
