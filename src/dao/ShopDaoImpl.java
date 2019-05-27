@@ -21,7 +21,7 @@ public class ShopDaoImpl implements ShopDao {
         int shopId = resultSet.getInt("shopid");
 
         FoodDao foodDao = new FoodDaoImpl();
-        List<FoodBean> foodItems = foodDao.fetchFoodList(shopId);
+    //    List<FoodBean> foodItems = foodDao.fetchFoodList(shopId);
 
         List<SenderBean> senderItems = new ArrayList<SenderBean>();
         return new ShopBean(
@@ -36,7 +36,7 @@ public class ShopDaoImpl implements ShopDao {
                 resultSet.getDouble("sendrange"),
                 resultSet.getDouble("longitude"),
                 resultSet.getDouble("latitude"),
-                foodItems,
+                null,
                 senderItems
         );
     }

@@ -8,8 +8,8 @@ public class DBUtil {
         Connection connection=null;
         String diverClass="com.mysql.cj.jdbc.Driver";
         String url="jdbc:mysql://10.21.127.125:3306/project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-        String name="cheliangyu";
-        String password="cheliangyu";
+        String name="dingsiyi";
+        String password="dingsiyi";
         Class.forName(diverClass);
         connection=DriverManager.getConnection(url,name,password);
         return connection;
