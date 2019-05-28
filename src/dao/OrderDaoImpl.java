@@ -21,12 +21,17 @@ public class OrderDaoImpl implements OrderDao {
     public List<OrderBean> fetchOrderList(int userid) throws Exception{
         List<OrderBean> orderBeanList=null;
         connection = dbutil.getConnection();
-        String sql="select * from order where userid=?"; //
+        String sql="select * " +
+                "from order o " +
+                "join sender s on s.senderid = o.senderid " +
+                "join shop sh on sh.shopid = o.shopid  where userid=?"; //
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setInt(1, userid); //将sql段第一个？代替
         resultSet=preparedStatement.executeQuery();
         orderBeanList=new ArrayList<OrderBean>();
         FoodDao food = new FoodDaoImpl();
+        ShopDao shop = new ShopDaoImpl();
+        SenderDao sender = new SenderDaoImpl();
         while(resultSet.next()){
             int a = resultSet.getInt("orderid");
             int b = resultSet.getInt("userid");
@@ -36,12 +41,16 @@ public class OrderDaoImpl implements OrderDao {
             Date f = resultSet.getDate("endtime");
             String g =  resultSet.getString("fooditems");
             int h = resultSet.getInt("state");
+            String sendername = resultSet.getString("sendername");
+            String senderpwd = resultSet.getString("password");
+            String shopname = resultSet.getString("shopname");
             ArrayList<FoodBean> list = new ArrayList<FoodBean>();
             List<String> foodlist = Arrays.asList(g.split(","));
             for(String s: foodlist){
                 list.add(food.getFoodById(s));
             }
-            OrderBean foodBean = new OrderBean(a,b,c,d,e,f,list,h);
+
+            OrderBean foodBean = new OrderBean(a,b,c,d,e,f,list,h, shop.fetchShop(shopname),sender.fetchSender(sendername, senderpwd));
             orderBeanList.add(foodBean);
         }
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
