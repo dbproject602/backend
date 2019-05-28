@@ -70,7 +70,30 @@ public class UserDaoImpl implements UserDao{
     }
 
     public int updateUser(UserBean userBean) throws Exception {
-        return 0;
+        int result = 0;
+        connection = dbutil.getConnection();
+        String sql = "update users set " +
+                "pwd = ?, " +
+                "telephone = ?, " +
+                "address = ?, " +
+                "realname = ?, " +
+                "money = ? " +
+                "where username = ?";
+        System.out.println("Start to update user in dao.");
+
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, userBean.getPassword());
+        preparedStatement.setString(2, userBean.getTelephone());
+        preparedStatement.setString(3, userBean.getAddress());
+        preparedStatement.setString(4, userBean.getName());
+        preparedStatement.setDouble(5, userBean.getMoney());
+        preparedStatement.setString(6, userBean.getUserName());
+
+        result = preparedStatement.executeUpdate();
+        System.out.println("Finish updating user in dao.");
+        dbutil.closeDBResource(connection, preparedStatement, resultSet);
+
+        return result;
     }
 
     public int deleteUserbyId(int userId) throws Exception {

@@ -17,6 +17,14 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    public int updateUser(UserBean userBean) throws Exception {
+        int result=0;
+        System.out.println("Start to update user in service!");
+        result = userDao.updateUser(userBean);
+        System.out.println("Finish updating user in service!");
+        return result;
+    }
+
     public int registerUser(UserBean userBean) throws Exception {
         int result=0;
         System.out.println("Start to add user in service!");
