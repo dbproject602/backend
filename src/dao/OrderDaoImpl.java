@@ -34,7 +34,7 @@ public class OrderDaoImpl implements OrderDao {
         FoodDao food = new FoodDaoImpl();
         ShopDao shop = new ShopDaoImpl();
         SenderDao sender = new SenderDaoImpl();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         List<FoodBean> list = new ArrayList<FoodBean>();
 
         while(resultSet.next()){
@@ -90,23 +90,10 @@ public class OrderDaoImpl implements OrderDao {
         SenderDao senderdao = new SenderDaoImpl();
         senderdao.recoverSenderById(orderBean.getSenderId());//恢复sender状态
 
-        String sql = "update orders set userid=?, shopid=?, senderid=?, starttime=?, endtime=?, fooditems=?, state=? where orderid=?";
+        String sql = "update orders set endtime=?, state=? where orderid=?";
         preparedStatement=connection.prepareStatement(sql);
-        preparedStatement.setInt(1,orderBean.getUserId());
-        preparedStatement.setString(2,orderBean.getShopId());
-        preparedStatement.setInt(3,orderBean.getSenderId());
-        preparedStatement.setString(4,sdf.format(orderBean.getStartTime()));
-        preparedStatement.setString(5,sdf.format(endtime));
-
-        String list = "";
-        List<FoodBean> foodlist = orderBean.getFoodItems();
-        for(FoodBean food: foodlist){
-            list+=food.getFoodId()+",";
-        }
-        list = list.substring(0,list.length()-1);
-
-        preparedStatement.setString(6,list);
-        preparedStatement.setInt(7,2);
+        preparedStatement.setString(1,sdf.format(endtime));
+        preparedStatement.setInt(2,2);
         int rtn = preparedStatement.executeUpdate();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         if(rtn==0) rtn=1; else rtn=0;
@@ -114,15 +101,26 @@ public class OrderDaoImpl implements OrderDao {
     }
     public int addOrder(OrderBean orderBean) throws  Exception{
         connection = dbutil.getConnection();
+
         SenderDao senderdao = new SenderDaoImpl();
         OrderFoodDao orderfood = new OrderFoodDaoImpl();
+        List<FoodBean> foodlist = orderBean.getFoodItems();
+
+        //get available sender
         int senderid = senderdao.fetchAvailSenderId();
-        if(senderid==0){
+        if(senderid==0)
             return 1;
-        }
+
+        //check balance
+        if(checkBalance(orderBean.getUserId(), foodlist)==1)
+            return 1;
+
+        //get current time
         Date starttime = new Date(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String sql = "insert into orders (orderid, userid, shopid, senderid, starttime, fooditem, state) values(?,?,?,?,?,?,?)";
+
+
+        String sql = "insert into orders (orderid, userid, shopid, senderid, starttime, state) values(?,?,?,?,?,?)";
        // System.out.println("insert sender sql:"+sql);
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setInt(1,counter++);
@@ -132,20 +130,23 @@ public class OrderDaoImpl implements OrderDao {
         preparedStatement.setInt(4,senderid);
         preparedStatement.setString(5,sdf.format(starttime));
 
+        //get string food list
         String list = "";
-        List<FoodBean> foodlist = orderBean.getFoodItems();
         for(FoodBean food: foodlist){
             list+=food.getFoodId()+",";
         }
         list = list.substring(0,list.length()-1);
         System.out.println("插入order, userid:"+orderBean.getUserId());
-        orderfood.addOrderFood(orderBean.getOrderId(),foodlist);
 
-        preparedStatement.setString(6,list);
-        preparedStatement.setInt(7,0);
+        preparedStatement.setInt(6,0);
         int rtn = preparedStatement.executeUpdate();
+
+        sql = "select last_insert_id()";
+        preparedStatement=connection.prepareStatement(sql);
+        resultSet=preparedStatement.executeQuery();
+        orderfood.addOrderFood(resultSet.getInt("orderid"),foodlist);
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
-        return checkBalance(orderBean.getUserId(), foodlist);
+        return 0;
     }
 
     private int checkBalance(int userid, List<FoodBean> foodlist) throws Exception{
@@ -155,6 +156,7 @@ public class OrderDaoImpl implements OrderDao {
         preparedStatement.setInt(1, userid); //将sql段第一个？代替
         resultSet=preparedStatement.executeQuery();
         double balance = 0;
+        resultSet.next();
         balance = resultSet.getDouble("money");
         double sum = 0;
         for(FoodBean foodbean: foodlist){
