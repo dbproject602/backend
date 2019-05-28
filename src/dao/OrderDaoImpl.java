@@ -42,20 +42,21 @@ public class OrderDaoImpl implements OrderDao {
             int d = resultSet.getInt("senderid");
             String e = resultSet.getString("starttime");
             String f = resultSet.getString("endtime");
-            String g =  resultSet.getString("fooditems");
+//            String g =  resultSet.getString("fooditems");
             int h = resultSet.getInt("state");
             String sendername = resultSet.getString("sendername");
             String senderpwd = resultSet.getString("password");
             String shopname = resultSet.getString("shopname");
             ArrayList<FoodBean> list = new ArrayList<FoodBean>();
-            List<String> foodlist = Arrays.asList(g.split(","));
-            for(String s: foodlist){
-                list.add(food.getFoodById(s));
-            }
+//            List<String> foodlist = Arrays.asList(g.split(","));
+//            for(String s: foodlist){
+//                list.add(food.getFoodById(s));
+//            }
 
             Date starttime = new Date(sdf.parse(e).getTime());
             Date endtime = new Date(sdf.parse(f).getTime());
-            OrderBean foodBean = new OrderBean(a,b,c,d,starttime,endtime,list,h, shop.fetchShop(shopname),sender.fetchSender(sendername, senderpwd));
+            OrderBean foodBean = new OrderBean(a,b,c,d,starttime,endtime,list,h,
+                    shop.fetchShop(shopname),sender.fetchSender(sendername, senderpwd));
             orderBeanList.add(foodBean);
         }
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
@@ -81,23 +82,23 @@ public class OrderDaoImpl implements OrderDao {
         SenderDao senderdao = new SenderDaoImpl();
         senderdao.recoverSenderById(orderBean.getSenderId());//恢复sender状态
 
-        String sql = "update orders set userid=?, shopid=?, senderid=?, starttime=?, endtime=?, fooditems=?, state=? where orderid=?";
+        String sql = "update orders set  endtime=?, state=? where orderid=?";
         preparedStatement=connection.prepareStatement(sql);
-        preparedStatement.setInt(1,orderBean.getUserId());
-        preparedStatement.setString(2,orderBean.getShopId());
-        preparedStatement.setInt(3,orderBean.getSenderId());
-        preparedStatement.setString(4,sdf.format(orderBean.getStartTime()));
-        preparedStatement.setString(5,sdf.format(endtime));
+//        preparedStatement.setInt(1,orderBean.getUserId());
+//        preparedStatement.setString(2,orderBean.getShopId());
+//        preparedStatement.setInt(3,orderBean.getSenderId());
+//        preparedStatement.setString(4,sdf.format(orderBean.getStartTime()));
+        preparedStatement.setString(2,sdf.format(endtime));
 
-        String list = "";
+//        String list = "";
         List<FoodBean> foodlist = orderBean.getFoodItems();
-        for(FoodBean food: foodlist){
-            list+=food.getFoodId()+",";
-        }
-        list = list.substring(0,list.length()-1);
-
-        preparedStatement.setString(6,list);
-        preparedStatement.setInt(7,2);
+//        for(FoodBean food: foodlist){
+//            list+=food.getFoodId()+",";
+//        }
+//        list = list.substring(0,list.length()-1);
+//
+//        preparedStatement.setString(6,list);
+        preparedStatement.setInt(1,2);
         int rtn = preparedStatement.executeUpdate();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         if(rtn==0) rtn=1; else rtn=0;
@@ -113,27 +114,27 @@ public class OrderDaoImpl implements OrderDao {
         }
         Date starttime = new Date(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String sql = "insert into orders (userid, shopid, senderid, starttime, fooditem, state) values(?,?,?,?,?,?)";
+        String sql = "insert into orders (userid, shopid, senderid, starttime,  state) values(?,?,?,?,?)";
        // System.out.println("insert sender sql:"+sql);
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setInt(1,orderBean.getUserId());
-        System.out.println("shopid "+orderBean.getShopId());
+        System.out.println("shopid in order"+orderBean.getShopId());
         preparedStatement.setString(2,orderBean.getShopId());
         preparedStatement.setInt(3,senderid);
         preparedStatement.setString(4,sdf.format(starttime));
 
-        String list = "";
+//        String list = "";
         List<FoodBean> foodlist = orderBean.getFoodItems();
-        for(FoodBean food: foodlist){
-            list+=food.getFoodId()+",";
-        }
-        list = list.substring(0,list.length()-1);
-        System.out.println("插入order, userid:"+orderBean.getUserId());
-        orderfood.addOrderFood(orderBean.getOrderId(),foodlist);
+//        for(FoodBean food: foodlist){
+//            list+=food.getFoodId()+",";
+//        }
+//        list = list.substring(0,list.length()-1);
+        System.out.println("尝试插入order, userid:"+orderBean.getUserId()+"\norder id:");
 
-        preparedStatement.setString(5,list);
-        preparedStatement.setInt(6,0);
+//        preparedStatement.setString(5,list);
+        preparedStatement.setInt(5,0);
         int rtn = preparedStatement.executeUpdate();
+        orderfood.addOrderFood(orderBean.getOrderId(),foodlist);
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return checkBalance(orderBean.getUserId(), foodlist);
     }
