@@ -3,6 +3,8 @@ package dao;
 import bean.FoodBean;
 import bean.OrderBean;
 import util.DBUtil;
+
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import java.sql.*;
@@ -56,22 +58,22 @@ public class OrderDaoImpl implements OrderDao {
         if(rtn==0) rtn=1; else rtn=0;
         return rtn;
     }
-    public int updateOrder(OrderBean bookBean) throws Exception{
+    public int updateOrder(OrderBean orderBean) throws Exception{
         connection = dbutil.getConnection();
         Date endtime = new Date(System.currentTimeMillis());//设置endtime
         SenderDao senderdao = new SenderDaoImpl();
-        senderdao.recoverSenderById(bookBean.getSenderId());//恢复sender状态
+        senderdao.recoverSenderById(orderBean.getSenderId());//恢复sender状态
 
         String sql = "update order set userid=?, shopid=?, senderid=?, starttime=?, endtime=?, fooditems=?, state=? where orderid=?";
         preparedStatement=connection.prepareStatement(sql);
-        preparedStatement.setInt(1,bookBean.getUserId());
-        preparedStatement.setString(2,bookBean.getShopId());
-        preparedStatement.setInt(3,bookBean.getSenderId());
-        preparedStatement.setDate(4,bookBean.getStartTime());
+        preparedStatement.setInt(1,orderBean.getUserId());
+        preparedStatement.setString(2,orderBean.getShopId());
+        preparedStatement.setInt(3,orderBean.getSenderId());
+        preparedStatement.setDate(4,orderBean.getStartTime());
         preparedStatement.setDate(5,endtime);
 
         String list = "";
-        List<FoodBean> foodlist = bookBean.getFoodItems();
+        List<FoodBean> foodlist = orderBean.getFoodItems();
         for(FoodBean food: foodlist){
             list+=food.getFoodId()+",";
         }
@@ -84,24 +86,25 @@ public class OrderDaoImpl implements OrderDao {
         if(rtn==0) rtn=1; else rtn=0;
         return rtn;
     }
-    public int addOrder(OrderBean bookBean) throws  Exception{
+    public int addOrder(OrderBean orderBean) throws  Exception{
+        connection = dbutil.getConnection();
         SenderDao senderdao = new SenderDaoImpl();
         int senderid = senderdao.fetchAvailSenderId();
         if(senderid==0){
             return 1;
         }
         Date starttime = new Date(System.currentTimeMillis());
-
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String sql = "insert into orders (userid, shopid, senderid, starttime, fooditem, state) values(?,?,?,?,?,?)";
-        System.out.println("insert sender sql:"+sql);
+       // System.out.println("insert sender sql:"+sql);
         preparedStatement=connection.prepareStatement(sql);
-        preparedStatement.setInt(1,bookBean.getUserId());
-        preparedStatement.setString(2,bookBean.getShopId());
+        preparedStatement.setInt(1,orderBean.getUserId());
+        System.out.println("shopid "+orderBean.getShopId());
+        preparedStatement.setString(2,orderBean.getShopId());
         preparedStatement.setInt(3,senderid);
-        preparedStatement.setDate(4,starttime);
-
+        preparedStatement.setString(4,sdf.format(starttime));
         String list = "";
-        List<FoodBean> foodlist = bookBean.getFoodItems();
+        List<FoodBean> foodlist = orderBean.getFoodItems();
         for(FoodBean food: foodlist){
             list+=food.getFoodId()+",";
         }
@@ -111,16 +114,19 @@ public class OrderDaoImpl implements OrderDao {
         preparedStatement.setInt(6,0);
         int rtn = preparedStatement.executeUpdate();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
-        return checkBalance(bookBean.getUserId(), foodlist);
+        return checkBalance(orderBean.getUserId(), foodlist);
     }
 
     private int checkBalance(int userid, List<FoodBean> foodlist) throws Exception{
         connection = dbutil.getConnection();
-        String sql="select * from user where userid=?"; //
+        String sql="select * from users where userid=?"; //
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setInt(1, userid); //将sql段第一个？代替
         resultSet=preparedStatement.executeQuery();
-        double balance = resultSet.getDouble("money");
+        double balance = 0;
+        while(resultSet.next()) {
+            balance = resultSet.getDouble("money");
+        }
         double sum = 0;
         for(FoodBean foodbean: foodlist){
             sum += foodbean.getPrice();
