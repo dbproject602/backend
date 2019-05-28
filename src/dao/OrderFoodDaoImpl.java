@@ -20,7 +20,7 @@ public class OrderFoodDaoImpl implements OrderFoodDao{
         connection = dbutil.getConnection();
         System.out.println("Start to add order_food in dao!");
         for (FoodBean foodBean : foodItems) {
-            String sql = "insert into food(orderid, foodid) values (?, ?)";
+            String sql = "insert into orders_food(orderid, foodid) values (?, ?)";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, orderId);
             preparedStatement.setString(2, foodBean.getFoodId());

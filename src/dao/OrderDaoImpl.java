@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
+    static int counter = 1;
     DBUtil dbutil = new DBUtil();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
@@ -113,14 +114,15 @@ public class OrderDaoImpl implements OrderDao {
         }
         Date starttime = new Date(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String sql = "insert into orders (userid, shopid, senderid, starttime, fooditem, state) values(?,?,?,?,?,?)";
+        String sql = "insert into orders (orderid, userid, shopid, senderid, starttime, fooditem, state) values(?,?,?,?,?,?,?)";
        // System.out.println("insert sender sql:"+sql);
         preparedStatement=connection.prepareStatement(sql);
-        preparedStatement.setInt(1,orderBean.getUserId());
+        preparedStatement.setInt(1,counter++);
+        preparedStatement.setInt(2,orderBean.getUserId());
         System.out.println("shopid "+orderBean.getShopId());
-        preparedStatement.setString(2,orderBean.getShopId());
-        preparedStatement.setInt(3,senderid);
-        preparedStatement.setString(4,sdf.format(starttime));
+        preparedStatement.setString(3,orderBean.getShopId());
+        preparedStatement.setInt(4,senderid);
+        preparedStatement.setString(5,sdf.format(starttime));
 
         String list = "";
         List<FoodBean> foodlist = orderBean.getFoodItems();
@@ -131,8 +133,8 @@ public class OrderDaoImpl implements OrderDao {
         System.out.println("插入order, userid:"+orderBean.getUserId());
         orderfood.addOrderFood(orderBean.getOrderId(),foodlist);
 
-        preparedStatement.setString(5,list);
-        preparedStatement.setInt(6,0);
+        preparedStatement.setString(6,list);
+        preparedStatement.setInt(7,0);
         int rtn = preparedStatement.executeUpdate();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return checkBalance(orderBean.getUserId(), foodlist);
