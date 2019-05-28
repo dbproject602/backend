@@ -67,16 +67,16 @@ public class ShopDaoImpl implements ShopDao {
         connection = dbutil.getConnection();
 
         String sql = "select * from shops s " +
-                "where (power((s._long_ - ?) * 2 * 3.14 * 6400 / 360, 2) + " +
-                "(power((s._lati_ - ?) * 2 * 3.14 * 6400 / 360, 2) < 4";
+                "where (power((s.longitude - ?) * 2 * 3.14 * 6400 / 360, 2)) + " +
+                "(power((s.latitude - ?) * 2 * 3.14 * 6400 / 360, 2)) < 4";
+
         preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setDouble(1, longitude);
         preparedStatement.setDouble(2, latitude);
-
+        resultSet=preparedStatement.executeQuery();
         while (resultSet.next()){
             result.add(parseResultSet(resultSet));
         }
-
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return result;
     }

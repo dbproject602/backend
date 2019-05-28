@@ -22,8 +22,8 @@ public class FetchShopListByDisServlet extends HttpServlet {
         //System.out.println("get it");
         request.setCharacterEncoding("UTF-8");
 
-        double longitude = Integer.parseInt(request.getParameter("longitude"));
-        double latitude = Integer.parseInt(request.getParameter("latitude"));
+        double longitude = Double.parseDouble(request.getParameter("longitude"));
+        double latitude = Double.parseDouble(request.getParameter("latitude"));
         List<ShopBean> shopList = null;
         try {
             shopList = shopService.fetchShopList(longitude, latitude);
