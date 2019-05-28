@@ -35,6 +35,7 @@ public class OrderDaoImpl implements OrderDao {
         ShopDao shop = new ShopDaoImpl();
         SenderDao sender = new SenderDaoImpl();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        List<FoodBean> list = new ArrayList<FoodBean>();
 
         while(resultSet.next()){
             int a = resultSet.getInt("orderid");
@@ -43,23 +44,30 @@ public class OrderDaoImpl implements OrderDao {
             int d = resultSet.getInt("senderid");
             String e = resultSet.getString("starttime");
             String f = resultSet.getString("endtime");
-            String g =  resultSet.getString("fooditems");
             int h = resultSet.getInt("state");
             String sendername = resultSet.getString("sendername");
             String senderpwd = resultSet.getString("password");
             String shopname = resultSet.getString("shopname");
-            ArrayList<FoodBean> list = new ArrayList<FoodBean>();
-            List<String> foodlist = Arrays.asList(g.split(","));
-            for(String s: foodlist){
-                list.add(food.getFoodById(s));
-            }
-
             Date starttime = new Date(sdf.parse(e).getTime());
             Date endtime = new Date(sdf.parse(f).getTime());
+
             OrderBean foodBean = new OrderBean(a,b,c,d,starttime,endtime,list,h, shop.fetchShop(shopname),sender.fetchSender(sendername, senderpwd));
             orderBeanList.add(foodBean);
         }
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
+
+        for(OrderBean orderbean: orderBeanList){
+            connection = dbutil.getConnection();
+            sql = "select * from orders_food where orderid=?";
+            preparedStatement=connection.prepareStatement(sql);
+            preparedStatement.setInt(1,orderbean.getOrderId());
+            resultSet=preparedStatement.executeQuery();
+            list = new ArrayList<FoodBean>();
+            while(resultSet.next()){
+                list.add(food.getFoodById(resultSet.getString("foodid")));
+            }
+            orderbean.setFoodItems(list);
+        }
 
         System.out.println("in orderDao: 订单长度:"+orderBeanList.size());
         return orderBeanList;
