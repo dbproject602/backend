@@ -105,12 +105,23 @@ public class OrderDaoImpl implements OrderDao {
         connection = dbutil.getConnection();
         SenderDao senderdao = new SenderDaoImpl();
         OrderFoodDao orderfood = new OrderFoodDaoImpl();
+        //get available sender
         int senderid = senderdao.fetchAvailSenderId();
-        if(senderid==0){
+        if(senderid==0)
             return 1;
-        }
+        //check balance
+        if(checkBalance(orderBean.getUserId(), orderBean.getFoodItems())==1)
+            return 1;
+        //get current time
         Date starttime = new Date(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //get food list
+        String list = "";
+        List<FoodBean> foodlist = orderBean.getFoodItems();
+        for(FoodBean food: foodlist){
+            list+=food.getFoodId()+",";
+        }
+        list = list.substring(0,list.length()-1);
         String sql = "insert into orders (userid, shopid, senderid, starttime, fooditem, state) values(?,?,?,?,?,?)";
        // System.out.println("insert sender sql:"+sql);
         preparedStatement=connection.prepareStatement(sql);
@@ -120,19 +131,13 @@ public class OrderDaoImpl implements OrderDao {
         preparedStatement.setInt(3,senderid);
         preparedStatement.setString(4,sdf.format(starttime));
 
-        String list = "";
-        List<FoodBean> foodlist = orderBean.getFoodItems();
-        for(FoodBean food: foodlist){
-            list+=food.getFoodId()+",";
-        }
-        list = list.substring(0,list.length()-1);
         orderfood.addOrderFood(orderBean.getOrderId(),foodlist);
 
         preparedStatement.setString(5,list);
         preparedStatement.setInt(6,0);
         int rtn = preparedStatement.executeUpdate();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
-        return checkBalance(orderBean.getUserId(), foodlist);
+        return 0;
     }
 
     private int checkBalance(int userid, List<FoodBean> foodlist) throws Exception{
