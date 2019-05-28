@@ -61,6 +61,7 @@ public class OrderDaoImpl implements OrderDao {
     public int updateOrder(OrderBean orderBean) throws Exception{
         connection = dbutil.getConnection();
         Date endtime = new Date(System.currentTimeMillis());//设置endtime
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SenderDao senderdao = new SenderDaoImpl();
         senderdao.recoverSenderById(orderBean.getSenderId());//恢复sender状态
 
@@ -69,8 +70,8 @@ public class OrderDaoImpl implements OrderDao {
         preparedStatement.setInt(1,orderBean.getUserId());
         preparedStatement.setString(2,orderBean.getShopId());
         preparedStatement.setInt(3,orderBean.getSenderId());
-        preparedStatement.setDate(4,orderBean.getStartTime());
-        preparedStatement.setDate(5,endtime);
+        preparedStatement.setString(4,sdf.format(orderBean.getStartTime()));
+        preparedStatement.setString(5,sdf.format(endtime));
 
         String list = "";
         List<FoodBean> foodlist = orderBean.getFoodItems();
@@ -103,6 +104,7 @@ public class OrderDaoImpl implements OrderDao {
         preparedStatement.setString(2,orderBean.getShopId());
         preparedStatement.setInt(3,senderid);
         preparedStatement.setString(4,sdf.format(starttime));
+
         String list = "";
         List<FoodBean> foodlist = orderBean.getFoodItems();
         for(FoodBean food: foodlist){
@@ -132,7 +134,7 @@ public class OrderDaoImpl implements OrderDao {
             sum += foodbean.getPrice();
         }
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
-        if(balance>sum) return 1;
+        if(balance>=sum) return 1;
         return 0;
     }
 }
