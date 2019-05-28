@@ -85,10 +85,10 @@ public class ShopDaoImpl implements ShopDao {
         List<ShopBean> result = new ArrayList<ShopBean>();
         connection = dbutil.getConnection();
 
-        String sql = "select * from shops s where s.shopname like %%?%% ";
+        String sql = "select * from shops s where s.shopname like ?";
         preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, findStr);
-
+        preparedStatement.setString(1, "%%"+findStr+"%%");
+        resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
             result.add(parseResultSet(resultSet));
         }
