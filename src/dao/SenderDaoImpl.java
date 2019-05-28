@@ -64,4 +64,47 @@ public class SenderDaoImpl implements SenderDao {
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return result;
     }
+    //用于order抓取空闲sender 不需要servlet
+    public int fetchAvailSenderId() throws Exception {
+        int sender = 0;
+        String name = null;
+        String key = null;
+        connection = dbutil.getConnection();
+        String sql = "select * from senders where state = 0";
+        preparedStatement = connection.prepareStatement(sql);
+        resultSet = preparedStatement.executeQuery();
+        if(resultSet!=null){
+            sender = resultSet.getInt("senderid");
+            name = resultSet.getString("sendername");
+            key = resultSet.getString("password");
+        }
+        dbutil.closeDBResource(connection, preparedStatement, resultSet);
+
+        SenderBean senderbean = fetchSender(name,key);
+        if(senderbean!=null){
+            senderbean.setState(1);
+            updateSender(senderbean);
+        }
+
+        return sender;
+    }
+    //用于恢复sender状态 不需要servlet
+    public void recoverSenderById(int senderid)throws Exception {
+        String name = null;
+        String key = null;
+        connection = dbutil.getConnection();
+        String sql = "select * from senders where senderid = ?";
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, senderid);
+        resultSet = preparedStatement.executeQuery();
+        if(resultSet!=null){
+            name = resultSet.getString("sendername");
+            key = resultSet.getString("password");
+        }
+        dbutil.closeDBResource(connection, preparedStatement, resultSet);
+
+        SenderBean senderbean = fetchSender(name,key);
+        senderbean.setState(0);
+        updateSender(senderbean);
+    }
 }

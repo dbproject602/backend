@@ -18,22 +18,24 @@ public class ShopDaoImpl implements ShopDao {
     private PreparedStatement preparedStatement = null;
 
     private ShopBean parseResultSet(ResultSet resultSet) throws Exception{
-        int shopId = resultSet.getInt("shopid");
+//        String shopId = resultSet.getString("shopid");
 
         FoodDao foodDao = new FoodDaoImpl();
     //    List<FoodBean> foodItems = foodDao.fetchFoodList(shopId);
 
         List<SenderBean> senderItems = new ArrayList<SenderBean>();
         return new ShopBean(
-                resultSet.getInt("shopid"),
+                resultSet.getString("shopid"),
                 resultSet.getString("shopname"),
-                resultSet.getString("password"),
+//                resultSet.getString("password"),
+                "",
                 resultSet.getInt("shoptype"),
                 resultSet.getString("telephone"),
                 resultSet.getString("address"),
                 resultSet.getBoolean("isopen"),
                 resultSet.getDouble("reputation"),
-                resultSet.getDouble("sendrange"),
+//                resultSet.getDouble("sendrange"),
+                0,
                 resultSet.getDouble("longitude"),
                 resultSet.getDouble("latitude"),
                 null,
@@ -110,7 +112,7 @@ public class ShopDaoImpl implements ShopDao {
         return result;
     }
 
-    public int deleteShopById(int shopId) throws Exception {
+    public int deleteShopById(String shopId) throws Exception {
         return 0;
     }
 
@@ -125,7 +127,7 @@ public class ShopDaoImpl implements ShopDao {
                 "isopen, reputation, sendrange, longitude, latitude) " +
                 "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, orderBean.getShopId());
+        preparedStatement.setString(1, orderBean.getShopId());
         preparedStatement.setString(2, orderBean.getShopName());
         preparedStatement.setString(3, orderBean.getPassword());
         preparedStatement.setInt(4, orderBean.getShopType());

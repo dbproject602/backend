@@ -22,15 +22,9 @@ public class DeleteFoodServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         int flag = 0;
         String str = request.getParameter("foodId");
-        int result = 0;
-        try {
-            result = (Integer) codingutil.stringtoObj(str);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         FoodService foodservice = new FoodServiceImpl();
         try {
-            flag = foodservice.deleteFoodById(result);
+            flag = foodservice.deleteFoodById(str);
         } catch (Exception e) {
             e.printStackTrace();
         }

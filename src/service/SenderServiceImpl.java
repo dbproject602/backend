@@ -16,6 +16,6 @@ public class SenderServiceImpl implements SenderService{
     public int registerUser(SenderBean senderBean) throws Exception {
         int result = 0;
         result = senderDao.addSender(senderBean);
-        return 0;
+        return result;
     }
 }

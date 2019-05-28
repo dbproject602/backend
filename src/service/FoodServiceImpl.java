@@ -9,7 +9,7 @@ import java.util.List;
 public class FoodServiceImpl implements FoodService {
     FoodDao foodDao =new FoodDaoImpl();
 
-    public List<FoodBean> fetchFoodList(int shopid){
+    public List<FoodBean> fetchFoodList(String shopid){
         List<FoodBean> foodList=null;
         try{
             foodList= foodDao.fetchFoodList(shopid);
@@ -19,31 +19,34 @@ public class FoodServiceImpl implements FoodService {
         }
         return foodList;
     }
-    public int deleteFoodById(int id){
+    public int deleteFoodById(String id){
+        int rtn = 1;
         try{
-            foodDao.deleteFoodById(id);
+            rtn = foodDao.deleteFoodById(id);
         }
         catch(Exception e){
             e.printStackTrace();
         }
-        return 1;
+        return rtn;
     }
     public int updateFood(FoodBean bookBean){
+        int rtn = 1;
         try{
-            foodDao.updateFood(bookBean);
+            rtn = foodDao.updateFood(bookBean);
         }
         catch(Exception e){
             e.printStackTrace();
         }
-        return 1;
+        return rtn;
     }
     public int addFood(FoodBean bookBean){
+        int rtn = 1;
         try{
-            foodDao.addFood(bookBean);
+           rtn =  foodDao.addFood(bookBean);
         }
         catch(Exception e){
             e.printStackTrace();
         }
-        return 1;
+        return rtn;
     }
 }

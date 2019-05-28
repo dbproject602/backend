@@ -21,7 +21,7 @@ public class FetchDiscountServlet extends HttpServlet {
         System.out.println("get it");
         request.setCharacterEncoding("UTF-8");
         DiscountService discountService=new DiscountServiceImpl();
-        int shopid= Integer.parseInt(request.getParameter("shopid"));
+        String shopid= request.getParameter("shopid");
         List<DiscountBean> discountList = discountService.fetchDiscountList(shopid);
         byte[] bytes = codingutil.objtobytes(discountList);
         ServletOutputStream out = response.getOutputStream();

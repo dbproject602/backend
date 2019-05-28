@@ -29,6 +29,6 @@ public class ShopServiceImpl implements ShopService {
     public int registerUser(ShopBean shopBean) throws Exception {
         int result = 0;
         result = shopDao.addShop(shopBean);
-        return 0;
+        return result;
     }
 }

@@ -20,31 +20,34 @@ public class OrderServiceImpl implements OrderService {
         return orderList;
     }
     public int deleteOrderById(int orderId){
+        int rtn = 1;
         try{
-            orderDao.deleteOrderById(orderId);
+            rtn = orderDao.deleteOrderById(orderId);
         }
         catch(Exception e){
             e.printStackTrace();
         }
-        return 1;
+        return rtn;
     }
     public int updateOrder(OrderBean orderBean){
+        int rtn = 1;
         try{
-            orderDao.updateOrder(orderBean);
+            rtn = orderDao.updateOrder(orderBean);
         }
         catch(Exception e){
             e.printStackTrace();
         }
-        return 1;
+        return rtn;
     }
     public int addOrder(OrderBean orderBean){
+        int rtn = 1;
         try{
-            orderDao.addOrder(orderBean);
+            rtn = orderDao.addOrder(orderBean);
         }
         catch(Exception e){
             e.printStackTrace();
         }
-        return 1;
+        return rtn;
     }
 
 }
