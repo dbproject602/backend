@@ -18,7 +18,7 @@ import util.codingutil;
 @WebServlet(name = "FetchOrderServlet")
 public class FetchOrderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("get it");
+        System.out.println("try to fetch order ");
         request.setCharacterEncoding("UTF-8");
         OrderService orderService=new OrderServiceImpl();
         int userid= Integer.parseInt(request.getParameter("userid"));
