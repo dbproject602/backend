@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
-    static int counter = 1;
     DBUtil dbutil = new DBUtil();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
@@ -120,15 +119,14 @@ public class OrderDaoImpl implements OrderDao {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 
-        String sql = "insert into orders (orderid, userid, shopid, senderid, starttime, state) values(?,?,?,?,?,?)";
+        String sql = "insert into orders (userid, shopid, senderid, starttime, state) values(?,?,?,?,?)";
        // System.out.println("insert sender sql:"+sql);
         preparedStatement=connection.prepareStatement(sql);
-        preparedStatement.setInt(1,counter++);
-        preparedStatement.setInt(2,orderBean.getUserId());
+        preparedStatement.setInt(1,orderBean.getUserId());
         System.out.println("shopid "+orderBean.getShopId());
-        preparedStatement.setString(3,orderBean.getShopId());
-        preparedStatement.setInt(4,senderid);
-        preparedStatement.setString(5,sdf.format(starttime));
+        preparedStatement.setString(2,orderBean.getShopId());
+        preparedStatement.setInt(3,senderid);
+        preparedStatement.setString(4,sdf.format(starttime));
 
         //get string food list
         String list = "";
@@ -138,7 +136,7 @@ public class OrderDaoImpl implements OrderDao {
         list = list.substring(0,list.length()-1);
         System.out.println("插入order, userid:"+orderBean.getUserId());
 
-        preparedStatement.setInt(6,0);
+        preparedStatement.setInt(5,0);
         int rtn = preparedStatement.executeUpdate();
 
         sql = "select last_insert_id()";
