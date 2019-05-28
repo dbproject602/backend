@@ -20,7 +20,7 @@ public class FetchShopListServlet extends HttpServlet {
     private ShopService shopService = new ShopServiceImpl();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //System.out.println("get it");
+        System.out.println("try fetch shop list");
         request.setCharacterEncoding("UTF-8");
 
         int shopType = Integer.parseInt(request.getParameter("shoptype"));
@@ -30,6 +30,7 @@ public class FetchShopListServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("shop fetched num:"+shopList.size());
         byte[] bytes = codingutil.objtobytes(shopList);
         ServletOutputStream out = response.getOutputStream();
         out.write(bytes);

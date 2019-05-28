@@ -94,7 +94,7 @@ public class OrderDaoImpl implements OrderDao {
         }
         Date starttime = new Date(System.currentTimeMillis());
 
-        String sql = "insert into order (userid, shopid, senderid, starttime, fooditems, state) values(?,?,?,?,?,?)";
+        String sql = "insert into order (userid, shopid, senderid, starttime, endtime,fooditems, state) values(?,?,?,?,?,?,?)";
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setInt(1,bookBean.getUserId());
         preparedStatement.setString(2,bookBean.getShopId());
@@ -110,7 +110,7 @@ public class OrderDaoImpl implements OrderDao {
         list = list.substring(0,list.length()-1);
 
         preparedStatement.setString(6,list);
-        preparedStatement.setString(7,bookBean.getState());
+        preparedStatement.setInt(7,bookBean.getState());
         resultSet=preparedStatement.executeQuery();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return 1;
