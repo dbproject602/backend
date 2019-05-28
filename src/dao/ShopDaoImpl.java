@@ -96,7 +96,7 @@ public class ShopDaoImpl implements ShopDao {
         return result;
     }
 
-    public int deleteShopById(int shopId) throws Exception {
+    public int deleteShopById(String shopId) throws Exception {
         return 0;
     }
 

@@ -9,7 +9,7 @@ import dao.DiscountDaoImpl;
 public class DiscountServiceImpl implements DiscountService {
     DiscountDao discountDao = new DiscountDaoImpl();
 
-    public List<DiscountBean> fetchDiscountList(int shopId){
+    public List<DiscountBean> fetchDiscountList(String shopId){
         List<DiscountBean> discountList = null;
         try{
             discountList = discountDao.fetchDiscountList(shopId);
@@ -20,33 +20,33 @@ public class DiscountServiceImpl implements DiscountService {
         return discountList;
     }
     public int deleteDiscountById(int discoutId){
+        int rtn = 1;
         try{
-            discountDao.deleteDiscountById(discoutId);
-            return 1;
+            rtn = discountDao.deleteDiscountById(discoutId);
         }
         catch(Exception e){
             e.printStackTrace();
-            return 0;
         }
+        return rtn;
     }
     public int updateDiscount(DiscountBean discountBean){
+        int rtn = 1;
         try{
-            discountDao.updateDiscount(discountBean);
-            return 1;
+            rtn = discountDao.updateDiscount(discountBean);
         }
         catch(Exception e){
             e.printStackTrace();
-            return 0;
         }
+        return rtn;
     }
     public int addDiscount(DiscountBean discountBean){
+        int rtn = 1;
         try{
-            discountDao.addDiscount(discountBean);
-            return 1;
+            rtn = discountDao.addDiscount(discountBean);
         }
         catch(Exception e){
             e.printStackTrace();
-            return 0;
         }
+        return rtn;
     }
 }

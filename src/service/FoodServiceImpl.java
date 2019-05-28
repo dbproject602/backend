@@ -19,34 +19,34 @@ public class FoodServiceImpl implements FoodService {
         }
         return foodList;
     }
-    public int deleteFoodById(int id){
+    public int deleteFoodById(String id){
+        int rtn = 1;
         try{
-            foodDao.deleteFoodById(id);
-            return 1;
+            rtn = foodDao.deleteFoodById(id);
         }
         catch(Exception e){
             e.printStackTrace();
-            return 0;
         }
+        return rtn;
     }
     public int updateFood(FoodBean bookBean){
+        int rtn = 1;
         try{
-            foodDao.updateFood(bookBean);
-            return 1;
+            rtn = foodDao.updateFood(bookBean);
         }
         catch(Exception e){
             e.printStackTrace();
-            return 0;
         }
+        return rtn;
     }
     public int addFood(FoodBean bookBean){
+        int rtn = 1;
         try{
-            foodDao.addFood(bookBean);
-            return 1;
+           rtn =  foodDao.addFood(bookBean);
         }
         catch(Exception e){
             e.printStackTrace();
-            return 0;
         }
+        return rtn;
     }
 }

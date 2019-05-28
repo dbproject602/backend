@@ -36,11 +36,11 @@ public class FoodDaoImpl implements FoodDao{
         return foodBeanList;
     }
 
-    public FoodBean getFoodById(int foodid) throws Exception{
+    public FoodBean getFoodById(String foodid) throws Exception{
         connection = dbutil.getConnection();
         String sql = "select * from food where foodid=?";
         preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1,foodid);
+        preparedStatement.setString(1,foodid);
         resultSet=preparedStatement.executeQuery();
         FoodBean food = new FoodBean(
                 resultSet.getString("foodid"),
@@ -54,14 +54,15 @@ public class FoodDaoImpl implements FoodDao{
     }
 
 
-    public int deleteFoodById( int foodId) throws Exception{
+    public int deleteFoodById( String foodId) throws Exception{
         connection = dbutil.getConnection();
         String sql = "delete from food where foodid=?";
         preparedStatement=connection.prepareStatement(sql);
-        preparedStatement.setInt(1, foodId);
-        resultSet=preparedStatement.executeQuery();
+        preparedStatement.setString(1, foodId);
+        int rtn =preparedStatement.executeUpdate();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
-        return 1;
+        if(rtn==0) rtn=1; else rtn=0;
+        return rtn;
     }
 
     public int updateFood(FoodBean bookBean) throws Exception{
@@ -73,22 +74,25 @@ public class FoodDaoImpl implements FoodDao{
         preparedStatement.setDouble(3, bookBean.getPrice());
         preparedStatement.setInt(4, bookBean.getRemaining());
         preparedStatement.setString(5, bookBean.getFoodId());
-        resultSet=preparedStatement.executeQuery();
+        int rtn = preparedStatement.executeUpdate();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
-        return 1;
+        if(rtn==0) rtn=1; else rtn=0;
+        return rtn;
     }
 
     public int addFood(FoodBean bookBean) throws  Exception{
         connection = dbutil.getConnection();
-        String sql = "insert into food (foodname, shopid, price, remaining) values(?,?,?,?)";
+        String sql = "insert into food (foodid, foodname, shopid, price, remaining) values(?, ?,?,?,?)";
         preparedStatement=connection.prepareStatement(sql);
-        preparedStatement.setString(1,bookBean.getFoodName());
-        preparedStatement.setString(2,bookBean.getShopId());
-        preparedStatement.setDouble(3,bookBean.getPrice());
-        preparedStatement.setInt(4,bookBean.getRemaining());
-        resultSet=preparedStatement.executeQuery();
+        preparedStatement.setString(1,bookBean.getFoodId());
+        preparedStatement.setString(2,bookBean.getFoodName());
+        preparedStatement.setString(3,bookBean.getShopId());
+        preparedStatement.setDouble(4,bookBean.getPrice());
+        preparedStatement.setInt(5,bookBean.getRemaining());
+        int rtn = preparedStatement.executeUpdate();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
-        return 1;
+        if(rtn==0) rtn=1; else rtn=0;
+        return rtn;
     }
 
 }

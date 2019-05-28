@@ -5,14 +5,14 @@ import java.sql.Date;
 
 public class DiscountBean implements Serializable {
     private int discountId;
-    private int shopId;
-    private int foodId;
+    private String shopId;
+    private String foodId;
     private String discountName;
     private Date startTime;
     private Date endTime;
     private double discountRatio;
 
-    public DiscountBean(int discountId, int shopId, int foodId,
+    public DiscountBean(int discountId, String shopId, String foodId,
                         String discountName, Date startTime, Date endTime, double discountRatio) {
         this.discountId = discountId;
         this.shopId = shopId;
@@ -31,19 +31,19 @@ public class DiscountBean implements Serializable {
         this.discountId = discountId;
     }
 
-    public int getShopId() {
+    public String getShopId() {
         return shopId;
     }
 
-    public void setShopId(int shopId) {
+    public void setShopId(String shopId) {
         this.shopId = shopId;
     }
 
-    public int getFoodId() {
+    public String getFoodId() {
         return foodId;
     }
 
-    public void setFoodId(int foodId) {
+    public void setFoodId(String foodId) {
         this.foodId = foodId;
     }
 
