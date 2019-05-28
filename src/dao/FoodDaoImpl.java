@@ -42,6 +42,7 @@ public class FoodDaoImpl implements FoodDao{
         preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1,foodid);
         resultSet=preparedStatement.executeQuery();
+        resultSet.next();
         FoodBean food = new FoodBean(
                 resultSet.getString("foodid"),
                 resultSet.getString("foodname"),
