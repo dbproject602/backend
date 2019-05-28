@@ -104,6 +104,7 @@ public class OrderDaoImpl implements OrderDao {
     public int addOrder(OrderBean orderBean) throws  Exception{
         connection = dbutil.getConnection();
         SenderDao senderdao = new SenderDaoImpl();
+        OrderFoodDao orderfood = new OrderFoodDaoImpl();
         int senderid = senderdao.fetchAvailSenderId();
         if(senderid==0){
             return 1;
@@ -125,6 +126,7 @@ public class OrderDaoImpl implements OrderDao {
             list+=food.getFoodId()+",";
         }
         list = list.substring(0,list.length()-1);
+        orderfood.addOrderFood(orderBean.getOrderId(),foodlist);
 
         preparedStatement.setString(5,list);
         preparedStatement.setInt(6,0);
@@ -140,15 +142,13 @@ public class OrderDaoImpl implements OrderDao {
         preparedStatement.setInt(1, userid); //将sql段第一个？代替
         resultSet=preparedStatement.executeQuery();
         double balance = 0;
-        while(resultSet.next()) {
-            balance = resultSet.getDouble("money");
-        }
+        balance = resultSet.getDouble("money");
         double sum = 0;
         for(FoodBean foodbean: foodlist){
             sum += foodbean.getPrice();
         }
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
-        if(balance>=sum) return 1;
-        return 0;
+        if(balance>=sum) return 0;
+        return 1;
     }
 }
