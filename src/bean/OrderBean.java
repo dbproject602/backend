@@ -9,14 +9,14 @@ import java.util.ArrayList;
 public class OrderBean implements Serializable {
     private int orderId;
     private int userId;
-    private int shopId;
+    private String shopId;
     private int senderId;
     private Date startTime;
     private Date endTime;
     private ArrayList<FoodBean> foodItems;
     private String state; //需要记录Order的状态，三个状态已下单，派送中，结单
 
-    public OrderBean(int orderId, int userId, int shopId, int senderId, Date startTime, Date endTime, ArrayList<FoodBean> items,String state) {
+    public OrderBean(int orderId, int userId, String shopId, int senderId, Date startTime, Date endTime, ArrayList<FoodBean> items,String state) {
         this.orderId = orderId;
         this.userId = userId;
         this.shopId = shopId;
@@ -48,11 +48,11 @@ public class OrderBean implements Serializable {
         this.userId = userId;
     }
 
-    public int getShopId() {
+    public String getShopId() {
         return shopId;
     }
 
-    public void setShopId(int shopId) {
+    public void setShopId(String shopId) {
         this.shopId = shopId;
     }
 

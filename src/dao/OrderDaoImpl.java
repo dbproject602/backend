@@ -28,7 +28,7 @@ public class OrderDaoImpl implements OrderDao {
         while(resultSet.next()){
             int a = resultSet.getInt("orderid");
             int b = resultSet.getInt("userid");
-            int c = resultSet.getInt("shopid");
+            String c = resultSet.getString("shopid");
             int d = resultSet.getInt("senderid");
             Date e = resultSet.getDate("starttime");
             Date f = resultSet.getDate("endtime");
@@ -64,7 +64,7 @@ public class OrderDaoImpl implements OrderDao {
         String sql = "update order set userid=?, shopid=?, senderid=?, starttime=?, endtime=?, fooditems=?, state=? where orderid=?";
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setInt(1,bookBean.getUserId());
-        preparedStatement.setInt(2,bookBean.getShopId());
+        preparedStatement.setString(2,bookBean.getShopId());
         preparedStatement.setInt(3,bookBean.getSenderId());
         preparedStatement.setDate(4,bookBean.getStartTime());
         preparedStatement.setDate(5,bookBean.getEndTime());
@@ -86,7 +86,7 @@ public class OrderDaoImpl implements OrderDao {
         String sql = "insert into order (userid, shopid, senderid, starttime, endtime, fooditems, state) values(?,?,?,?,?,?,?)";
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setInt(1,bookBean.getUserId());
-        preparedStatement.setInt(2,bookBean.getShopId());
+        preparedStatement.setString(2,bookBean.getShopId());
         preparedStatement.setInt(3,bookBean.getSenderId());
         preparedStatement.setDate(4,bookBean.getStartTime());
         preparedStatement.setDate(5,bookBean.getEndTime());
@@ -98,8 +98,8 @@ public class OrderDaoImpl implements OrderDao {
         }
         list = list.substring(0,list.length()-1);
 
-        preparedStatement.setString(7,list);
-        preparedStatement.setString(8,bookBean.getState());
+        preparedStatement.setString(6,list);
+        preparedStatement.setString(7,bookBean.getState());
         resultSet=preparedStatement.executeQuery();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return 1;
