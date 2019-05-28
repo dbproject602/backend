@@ -33,7 +33,7 @@ public class OrderDaoImpl implements OrderDao {
             Date e = resultSet.getDate("starttime");
             Date f = resultSet.getDate("endtime");
             String g =  resultSet.getString("fooditems");
-            String h = resultSet.getString("state");
+            int h = resultSet.getInt("state");
             ArrayList<FoodBean> list = new ArrayList<FoodBean>();
             List<String> foodlist = Arrays.asList(g.split(","));
             for(String s: foodlist){
@@ -81,7 +81,7 @@ public class OrderDaoImpl implements OrderDao {
         list = list.substring(0,list.length()-1);
 
         preparedStatement.setString(6,list);
-        preparedStatement.setString(7,"结单");
+        preparedStatement.setInt(7,2);
         resultSet=preparedStatement.executeQuery();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return 1;
@@ -109,7 +109,7 @@ public class OrderDaoImpl implements OrderDao {
         list = list.substring(0,list.length()-1);
 
         preparedStatement.setString(5,list);
-        preparedStatement.setString(6,"已下单");
+        preparedStatement.setInt(6,0);
         resultSet=preparedStatement.executeQuery();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return 1;

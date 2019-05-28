@@ -14,9 +14,9 @@ public class OrderBean implements Serializable {
     private Date startTime;
     private Date endTime;
     private List<FoodBean> foodItems;
-    private String state; //需要记录Order的状态，三个状态已下单，派送中，结单
+    private int state; //需要记录Order的状态，三个状态0已下单，1派送中，2结单
 
-    public OrderBean(int orderId, int userId, int shopId, int senderId, Date startTime, Date endTime, List<FoodBean> items,String state) {
+    public OrderBean(int orderId, int userId, int shopId, int senderId, Date startTime, Date endTime, List<FoodBean> items,int state) {
         this.orderId = orderId;
         this.userId = userId;
         this.shopId = shopId;
@@ -26,9 +26,9 @@ public class OrderBean implements Serializable {
         this.foodItems = items;
         this.state = state;
     }
-    public String getState() { return state; }
+    public int getState() { return state; }
 
-    public void setState(String state) {
+    public void setState(int state) {
         this.state = state;
     }
 

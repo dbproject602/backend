@@ -22,29 +22,32 @@ public class OrderServiceImpl implements OrderService {
     public int deleteOrderById(int orderId){
         try{
             orderDao.deleteOrderById(orderId);
+            return 1;
         }
         catch(Exception e){
             e.printStackTrace();
+            return 0;
         }
-        return 1;
     }
     public int updateOrder(OrderBean orderBean){
         try{
             orderDao.updateOrder(orderBean);
+            return 1;
         }
         catch(Exception e){
             e.printStackTrace();
+            return 0;
         }
-        return 1;
     }
     public int addOrder(OrderBean orderBean){
         try{
             orderDao.addOrder(orderBean);
+            return 1;
         }
         catch(Exception e){
             e.printStackTrace();
+            return 0;
         }
-        return 1;
     }
 
 }
