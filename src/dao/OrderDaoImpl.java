@@ -59,6 +59,8 @@ public class OrderDaoImpl implements OrderDao {
             orderBeanList.add(foodBean);
         }
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
+
+        System.out.println("in orderDao: 订单长度:"+orderBeanList.size());
         return orderBeanList;
     }
 
