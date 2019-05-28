@@ -9,7 +9,7 @@ import java.util.List;
 public class FoodServiceImpl implements FoodService {
     FoodDao foodDao =new FoodDaoImpl();
 
-    public List<FoodBean> fetchFoodList(int shopid){
+    public List<FoodBean> fetchFoodList(String shopid){
         List<FoodBean> foodList=null;
         try{
             foodList= foodDao.fetchFoodList(shopid);

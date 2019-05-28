@@ -20,7 +20,7 @@ public class FetchFoodServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         FoodService foodService=new FoodServiceImpl();
 
-        int shopid= Integer.parseInt(request.getParameter("shopid"));
+        String shopid= (request.getParameter("shopid"));
         System.out.println("get fetchshopId:"+shopid);
         List<FoodBean> foodList = foodService.fetchFoodList(shopid);
         System.out.println("get fetchFood:"+foodList.size());

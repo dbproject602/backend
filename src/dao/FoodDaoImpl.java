@@ -14,12 +14,12 @@ public class FoodDaoImpl implements FoodDao{
     ResultSet resultSet = null;
     Statement statement = null;
     ResultSetMetaData metaData = null;
-    public List<FoodBean> fetchFoodList(int shopid) throws Exception{
+    public List<FoodBean> fetchFoodList(String shopid) throws Exception{
         List<FoodBean> foodBeanList=null;
         connection = dbutil.getConnection();
         String sql="select * from food where shopid=?"; //
         preparedStatement=connection.prepareStatement(sql);
-        preparedStatement.setInt(1, shopid); //将sql段第一个？代替
+        preparedStatement.setString(1, shopid); //将sql段第一个？代替
         resultSet=preparedStatement.executeQuery();
         foodBeanList=new ArrayList<FoodBean>();
         while(resultSet.next()){
