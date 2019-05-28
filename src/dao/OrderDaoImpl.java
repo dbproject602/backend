@@ -54,6 +54,8 @@ public class OrderDaoImpl implements OrderDao {
             orderBeanList.add(foodBean);
         }
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
+
+        System.out.println("in orderDao: 订单长度:"+orderBeanList.size());
         return orderBeanList;
     }
 
@@ -120,7 +122,7 @@ public class OrderDaoImpl implements OrderDao {
             list+=food.getFoodId()+",";
         }
         list = list.substring(0,list.length()-1);
-
+        System.out.println("插入order, userid:"+orderBean.getUserId());
         preparedStatement.setString(5,list);
         preparedStatement.setInt(6,0);
         int rtn = preparedStatement.executeUpdate();
