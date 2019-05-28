@@ -22,23 +22,26 @@ public class OrderDaoImpl implements OrderDao {
         List<OrderBean> orderBeanList=null;
         connection = dbutil.getConnection();
         String sql="select * " +
-                "from order o " +
+                "from orders o " +
                 "join sender s on s.senderid = o.senderid " +
                 "join shop sh on sh.shopid = o.shopid  where userid=?"; //
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setInt(1, userid); //将sql段第一个？代替
         resultSet=preparedStatement.executeQuery();
+
         orderBeanList=new ArrayList<OrderBean>();
         FoodDao food = new FoodDaoImpl();
         ShopDao shop = new ShopDaoImpl();
         SenderDao sender = new SenderDaoImpl();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
         while(resultSet.next()){
             int a = resultSet.getInt("orderid");
             int b = resultSet.getInt("userid");
             String c = resultSet.getString("shopid");
             int d = resultSet.getInt("senderid");
-            Date e = resultSet.getDate("starttime");
-            Date f = resultSet.getDate("endtime");
+            String e = resultSet.getString("starttime");
+            String f = resultSet.getString("endtime");
             String g =  resultSet.getString("fooditems");
             int h = resultSet.getInt("state");
             String sendername = resultSet.getString("sendername");
@@ -50,7 +53,9 @@ public class OrderDaoImpl implements OrderDao {
                 list.add(food.getFoodById(s));
             }
 
-            OrderBean foodBean = new OrderBean(a,b,c,d,e,f,list,h, shop.fetchShop(shopname),sender.fetchSender(sendername, senderpwd));
+            Date starttime = new Date(sdf.parse(e).getTime());
+            Date endtime = new Date(sdf.parse(f).getTime());
+            OrderBean foodBean = new OrderBean(a,b,c,d,starttime,endtime,list,h, shop.fetchShop(shopname),sender.fetchSender(sendername, senderpwd));
             orderBeanList.add(foodBean);
         }
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
@@ -61,7 +66,7 @@ public class OrderDaoImpl implements OrderDao {
 
     public int deleteOrderById(int orderId) throws Exception{
         connection = dbutil.getConnection();
-        String sql = "delete from order where orderid=?";
+        String sql = "delete from orders where orderid=?";
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setInt(1, orderId);
         int rtn = preparedStatement.executeUpdate();
@@ -76,7 +81,7 @@ public class OrderDaoImpl implements OrderDao {
         SenderDao senderdao = new SenderDaoImpl();
         senderdao.recoverSenderById(orderBean.getSenderId());//恢复sender状态
 
-        String sql = "update order set userid=?, shopid=?, senderid=?, starttime=?, endtime=?, fooditems=?, state=? where orderid=?";
+        String sql = "update orders set userid=?, shopid=?, senderid=?, starttime=?, endtime=?, fooditems=?, state=? where orderid=?";
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setInt(1,orderBean.getUserId());
         preparedStatement.setString(2,orderBean.getShopId());
@@ -101,6 +106,7 @@ public class OrderDaoImpl implements OrderDao {
     public int addOrder(OrderBean orderBean) throws  Exception{
         connection = dbutil.getConnection();
         SenderDao senderdao = new SenderDaoImpl();
+        OrderFoodDao orderfood = new OrderFoodDaoImpl();
         int senderid = senderdao.fetchAvailSenderId();
         if(senderid==0){
             return 1;
@@ -123,6 +129,8 @@ public class OrderDaoImpl implements OrderDao {
         }
         list = list.substring(0,list.length()-1);
         System.out.println("插入order, userid:"+orderBean.getUserId());
+        orderfood.addOrderFood(orderBean.getOrderId(),foodlist);
+
         preparedStatement.setString(5,list);
         preparedStatement.setInt(6,0);
         int rtn = preparedStatement.executeUpdate();
@@ -137,15 +145,13 @@ public class OrderDaoImpl implements OrderDao {
         preparedStatement.setInt(1, userid); //将sql段第一个？代替
         resultSet=preparedStatement.executeQuery();
         double balance = 0;
-        while(resultSet.next()) {
-            balance = resultSet.getDouble("money");
-        }
+        balance = resultSet.getDouble("money");
         double sum = 0;
         for(FoodBean foodbean: foodlist){
             sum += foodbean.getPrice();
         }
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
-        if(balance>=sum) return 1;
-        return 0;
+        if(balance>=sum) return 0;
+        return 1;
     }
 }
