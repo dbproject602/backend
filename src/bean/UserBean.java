@@ -20,6 +20,15 @@ public class UserBean implements Serializable {
         this.name = name;
     }
 
+    public UserBean(String userName, String password, String telephone, String address,String name) {
+        this.userId = 0;
+        this.userName = userName;
+        this.password = password;
+        this.telephone = telephone;
+        this.address = address;
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
