@@ -28,10 +28,12 @@ public class OrderDaoImpl implements OrderDao {
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setInt(1, userid); //将sql段第一个？代替
         resultSet=preparedStatement.executeQuery();
+
         orderBeanList=new ArrayList<OrderBean>();
         FoodDao food = new FoodDaoImpl();
         ShopDao shop = new ShopDaoImpl();
         SenderDao sender = new SenderDaoImpl();
+
         while(resultSet.next()){
             int a = resultSet.getInt("orderid");
             int b = resultSet.getInt("userid");

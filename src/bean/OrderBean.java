@@ -27,7 +27,7 @@ public class OrderBean implements Serializable {
         this.foodItems = items;
         this.state = 0;
     }
-    public OrderBean(int orderId, int userId, String shopId, int senderId, Date startTime, Date endTime, List<FoodBean> items,int state, ShopBean shopbean, SenderBean senderbean) {
+    public OrderBean(int orderId, int userId, String shopId, int senderId, Date startTime, Date endTime, List<FoodBean> items,int state, ShopBean shopBean, SenderBean senderBean) {
         this.orderId = orderId;
         this.userId = userId;
         this.shopId = shopId;
