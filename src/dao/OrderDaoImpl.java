@@ -110,8 +110,7 @@ public class OrderDaoImpl implements OrderDao {
         preparedStatement.setInt(6,0);
         int rtn = preparedStatement.executeUpdate();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
-        if(rtn==0) rtn=1; else rtn=0;
-        return rtn;
+        return checkBalance(bookBean.getUserId(), foodlist);
     }
 
     private int checkBalance(int userid, List<FoodBean> foodlist) throws Exception{
@@ -120,9 +119,13 @@ public class OrderDaoImpl implements OrderDao {
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setInt(1, userid); //将sql段第一个？代替
         resultSet=preparedStatement.executeQuery();
-        double balance = resultSet.getDouble("");
-
+        double balance = resultSet.getDouble("money");
+        double sum = 0;
+        for(FoodBean foodbean: foodlist){
+            sum += foodbean.getPrice();
+        }
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
+        if(balance>sum) return 1;
         return 0;
     }
 }
