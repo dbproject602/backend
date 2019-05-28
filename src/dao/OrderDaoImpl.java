@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class OrderDaoImpl implements OrderDao {
     static int counter = 1;
@@ -43,16 +44,16 @@ public class OrderDaoImpl implements OrderDao {
             int d = resultSet.getInt("senderid");
             String e = resultSet.getString("starttime");
             String f = resultSet.getString("endtime");
-            String g =  resultSet.getString("fooditems");
+//            String g =  resultSet.getString("fooditems");
             int h = resultSet.getInt("state");
             String sendername = resultSet.getString("sendername");
             String senderpwd = resultSet.getString("password");
             String shopname = resultSet.getString("shopname");
             ArrayList<FoodBean> list = new ArrayList<FoodBean>();
-            List<String> foodlist = Arrays.asList(g.split(","));
-            for(String s: foodlist){
-                list.add(food.getFoodById(s));
-            }
+//            List<String> foodlist = Arrays.asList(g.split(","));
+//            for(String s: foodlist){
+//                list.add(food.getFoodById(s));
+//            }
 
             Date starttime = new Date(sdf.parse(e).getTime());
             Date endtime = new Date(sdf.parse(f).getTime());
@@ -114,10 +115,13 @@ public class OrderDaoImpl implements OrderDao {
         }
         Date starttime = new Date(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String sql = "insert into orders (orderid, userid, shopid, senderid, starttime, fooditem, state) values(?,?,?,?,?,?,?)";
+        String sql = "insert into orders (orderid, userid, shopid, senderid, starttime, state) values(?,?,?,?,?,?)";
        // System.out.println("insert sender sql:"+sql);
+        long t = System.currentTimeMillis();
+        Random rand =new Random(t);
+        counter = (int)(1+rand.nextInt(1000000-1+1));
         preparedStatement=connection.prepareStatement(sql);
-        preparedStatement.setInt(1,counter++);
+        preparedStatement.setInt(1,counter);
         preparedStatement.setInt(2,orderBean.getUserId());
         System.out.println("shopid "+orderBean.getShopId());
         preparedStatement.setString(3,orderBean.getShopId());
@@ -131,11 +135,11 @@ public class OrderDaoImpl implements OrderDao {
         }
         list = list.substring(0,list.length()-1);
         System.out.println("插入order, userid:"+orderBean.getUserId());
-        orderfood.addOrderFood(orderBean.getOrderId(),foodlist);
-
-        preparedStatement.setString(6,list);
-        preparedStatement.setInt(7,0);
+//
+//        preparedStatement.setString(6,list);
+        preparedStatement.setInt(6,0);
         int rtn = preparedStatement.executeUpdate();
+        orderfood.addOrderFood(counter,foodlist);
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return checkBalance(orderBean.getUserId(), foodlist);
     }
@@ -147,6 +151,7 @@ public class OrderDaoImpl implements OrderDao {
         preparedStatement.setInt(1, userid); //将sql段第一个？代替
         resultSet=preparedStatement.executeQuery();
         double balance = 0;
+        resultSet.next(); // 开始第一个result
         balance = resultSet.getDouble("money");
         double sum = 0;
         for(FoodBean foodbean: foodlist){
