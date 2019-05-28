@@ -8,4 +8,6 @@ public interface SenderDao {
     int deleteSenderById(int senderId) throws Exception;
     int updateSender(SenderBean senderBean) throws Exception;
     int addSender(SenderBean senderBean) throws  Exception;
+    int fetchAvailSenderId() throws Exception;
+    void recoverSenderById(int senderid)throws Exception;
 }

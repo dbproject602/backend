@@ -17,33 +17,36 @@ public class DiscountServiceImpl implements DiscountService {
         catch(Exception e){
             e.printStackTrace();
         }
-        return null;
+        return discountList;
     }
     public int deleteDiscountById(int discoutId){
         try{
             discountDao.deleteDiscountById(discoutId);
+            return 1;
         }
         catch(Exception e){
             e.printStackTrace();
+            return 0;
         }
-        return 1;
     }
     public int updateDiscount(DiscountBean discountBean){
         try{
             discountDao.updateDiscount(discountBean);
+            return 1;
         }
         catch(Exception e){
             e.printStackTrace();
+            return 0;
         }
-        return 1;
     }
     public int addDiscount(DiscountBean discountBean){
         try{
             discountDao.addDiscount(discountBean);
+            return 1;
         }
         catch(Exception e){
             e.printStackTrace();
+            return 0;
         }
-        return 1;
     }
 }

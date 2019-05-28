@@ -33,7 +33,7 @@ public class OrderDaoImpl implements OrderDao {
             Date e = resultSet.getDate("starttime");
             Date f = resultSet.getDate("endtime");
             String g =  resultSet.getString("fooditems");
-            String h = resultSet.getString("state");
+            int h = resultSet.getInt("state");
             ArrayList<FoodBean> list = new ArrayList<FoodBean>();
             List<String> foodlist = Arrays.asList(g.split(","));
             for(String s: foodlist){
@@ -61,29 +61,40 @@ public class OrderDaoImpl implements OrderDao {
     }
     public int updateOrder(OrderBean bookBean) throws Exception{
         connection = dbutil.getConnection();
+        Date endtime = new Date(System.currentTimeMillis());//设置endtime
+        SenderDao senderdao = new SenderDaoImpl();
+        senderdao.recoverSenderById(bookBean.getSenderId());//恢复sender状态
+
         String sql = "update order set userid=?, shopid=?, senderid=?, starttime=?, endtime=?, fooditems=?, state=? where orderid=?";
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setInt(1,bookBean.getUserId());
         preparedStatement.setString(2,bookBean.getShopId());
         preparedStatement.setInt(3,bookBean.getSenderId());
         preparedStatement.setDate(4,bookBean.getStartTime());
-        preparedStatement.setDate(5,bookBean.getEndTime());
+        preparedStatement.setDate(5,endtime);
 
         String list = "";
-        ArrayList<FoodBean> foodlist = bookBean.getFoodItems();
+        List<FoodBean> foodlist = bookBean.getFoodItems();
         for(FoodBean food: foodlist){
             list+=food.getFoodId()+",";
         }
         list = list.substring(0,list.length()-1);
 
         preparedStatement.setString(6,list);
-        preparedStatement.setString(7,bookBean.getState());
+        preparedStatement.setInt(7,2);
         resultSet=preparedStatement.executeQuery();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return 1;
     }
     public int addOrder(OrderBean bookBean) throws  Exception{
-        String sql = "insert into order (userid, shopid, senderid, starttime, endtime, fooditems, state) values(?,?,?,?,?,?,?)";
+        SenderDao senderdao = new SenderDaoImpl();
+        int senderid = senderdao.fetchAvailSenderId();
+        if(senderid==0){
+            return 0;
+        }
+        Date starttime = new Date(System.currentTimeMillis());
+
+        String sql = "insert into order (userid, shopid, senderid, starttime, fooditems, state) values(?,?,?,?,?,?)";
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setInt(1,bookBean.getUserId());
         preparedStatement.setString(2,bookBean.getShopId());
@@ -92,7 +103,7 @@ public class OrderDaoImpl implements OrderDao {
         preparedStatement.setDate(5,bookBean.getEndTime());
 
         String list = "";
-        ArrayList<FoodBean> foodlist = bookBean.getFoodItems();
+        List<FoodBean> foodlist = bookBean.getFoodItems();
         for(FoodBean food: foodlist){
             list+=food.getFoodId()+",";
         }
