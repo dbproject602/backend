@@ -4,13 +4,11 @@ import bean.FoodBean;
 import bean.OrderBean;
 import util.DBUtil;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
+import java.util.*;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class OrderDaoImpl implements OrderDao {
     DBUtil dbutil = new DBUtil();
@@ -24,8 +22,8 @@ public class OrderDaoImpl implements OrderDao {
         connection = dbutil.getConnection();
         String sql="select * " +
                 "from orders o " +
-                "join sender s on s.senderid = o.senderid " +
-                "join shop sh on sh.shopid = o.shopid  where userid=?"; //
+                "join senders s on s.senderid = o.senderid " +
+                "join shops sh on sh.shopid = o.shopid  where userid=?"; //
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setInt(1, userid); //将sql段第一个？代替
         resultSet=preparedStatement.executeQuery();
@@ -48,8 +46,17 @@ public class OrderDaoImpl implements OrderDao {
             String sendername = resultSet.getString("sendername");
             String senderpwd = resultSet.getString("password");
             String shopname = resultSet.getString("shopname");
+            Date endtime;
             Date starttime = new Date(sdf.parse(e).getTime());
-            Date endtime = new Date(sdf.parse(f).getTime());
+            if(f==null) {
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(starttime);
+                cal.add(Calendar.DAY_OF_MONTH, 1);
+                endtime = new Date(cal.getTimeInMillis());
+            }
+            else
+                endtime = new Date(sdf.parse(f).getTime());
+//            Date endtime = new Date(sdf.parse(f).getTime());
 
             OrderBean foodBean = new OrderBean(a,b,c,d,starttime,endtime,list,h, shop.fetchShop(shopname),sender.fetchSender(sendername, senderpwd));
             orderBeanList.add(foodBean);
@@ -100,7 +107,6 @@ public class OrderDaoImpl implements OrderDao {
         return rtn;
     }
     public int addOrder(OrderBean orderBean) throws  Exception{
-        connection = dbutil.getConnection();
 
         SenderDao senderdao = new SenderDaoImpl();
         OrderFoodDao orderfood = new OrderFoodDaoImpl();
@@ -124,7 +130,9 @@ public class OrderDaoImpl implements OrderDao {
        // System.out.println("insert sender sql:"+sql);
         long t = System.currentTimeMillis();
         Random rand =new Random(t);
-        counter = (int)(1+rand.nextInt(1000000-1+1));
+//        counter = (int)(1+rand.nextInt(1000000-1+1));
+
+        connection = dbutil.getConnection();
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setInt(1,orderBean.getUserId());
         System.out.println("shopid "+orderBean.getShopId());
@@ -143,10 +151,13 @@ public class OrderDaoImpl implements OrderDao {
         preparedStatement.setInt(5,0);
         int rtn = preparedStatement.executeUpdate();
 
-        sql = "select last_insert_id()";
+        sql = "select last_insert_id() id from orders";
         preparedStatement=connection.prepareStatement(sql);
         resultSet=preparedStatement.executeQuery();
-        orderfood.addOrderFood(resultSet.getInt("orderid"),foodlist);
+        resultSet.next();
+        int orderid = resultSet.getInt("id");
+
+        orderfood.addOrderFood(orderid,foodlist);
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         return 0;
     }
