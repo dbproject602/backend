@@ -15,7 +15,16 @@ public class OrderBean implements Serializable {
     private Date endTime;
     private List<FoodBean> foodItems;
     private int state; //需要记录Order的状态，三个状态0已下单，1派送中，2结单
-
+    public OrderBean( int userId, String shopId, List<FoodBean> items) {
+        this.orderId = 0;
+        this.userId = userId;
+        this.shopId = shopId;
+        this.senderId = 0;
+        this.startTime = null;
+        this.endTime = null;
+        this.foodItems = items;
+        this.state = 0;
+    }
     public OrderBean(int orderId, int userId, String shopId, int senderId, Date startTime, Date endTime, List<FoodBean> items,int state) {
         this.orderId = orderId;
         this.userId = userId;

@@ -74,6 +74,7 @@ public class SenderDaoImpl implements SenderDao {
         preparedStatement = connection.prepareStatement(sql);
         resultSet = preparedStatement.executeQuery();
         if(resultSet!=null){
+            resultSet.next();
             sender = resultSet.getInt("senderid");
             name = resultSet.getString("sendername");
             key = resultSet.getString("password");

@@ -24,6 +24,8 @@ public class AddOrderServlet extends HttpServlet {
         int flag = 0;
         String str = request.getParameter("orderBean");
         OrderBean result = null;
+        System.out.println("servlet get order:"+str);
+
         try {
             result = (OrderBean) codingutil.stringtoObj(str);
         } catch (Exception e) {

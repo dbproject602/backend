@@ -92,7 +92,8 @@ public class OrderDaoImpl implements OrderDao {
         }
         Date starttime = new Date(System.currentTimeMillis());
 
-        String sql = "insert into order (userid, shopid, senderid, starttime, fooditems, state) values(?,?,?,?,?,?)";
+        String sql = "insert into orders (userid, shopid, senderid, starttime, fooditem, state) values(?,?,?,?,?,?)";
+        System.out.println("insert sender sql:"+sql);
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setInt(1,bookBean.getUserId());
         preparedStatement.setString(2,bookBean.getShopId());
