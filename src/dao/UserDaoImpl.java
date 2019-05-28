@@ -31,7 +31,8 @@ public class UserDaoImpl implements UserDao{
                         resultSet.getString("pwd"),
                         resultSet.getString("telephone"),
                         resultSet.getString("address"),
-                        resultSet.getString("realname")
+                        resultSet.getString("realname"),
+                        resultSet.getDouble("money")
                 );
             }
 
@@ -47,18 +48,19 @@ public class UserDaoImpl implements UserDao{
     }
 
 
-    public int addUser(UserBean userinfoBean) throws Exception {
+    public int addUser(UserBean userBean) throws Exception {
         int result = 0;
         connection = dbutil.getConnection();
-        String sql = "insert into users (username, pwd, telephone, address, realname) values (?,?,?,?,?)";
+        String sql = "insert into users (username, pwd, telephone, address, realname, money) values (?,?,?,?,?,?)";
         System.out.println("Start to get user in dao.");
 
         preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, userinfoBean.getUserName());
-        preparedStatement.setString(2, userinfoBean.getPassword());
-        preparedStatement.setString(3, userinfoBean.getTelephone());
-        preparedStatement.setString(4, userinfoBean.getAddress());
-        preparedStatement.setString(5, userinfoBean.getName());
+        preparedStatement.setString(1, userBean.getUserName());
+        preparedStatement.setString(2, userBean.getPassword());
+        preparedStatement.setString(3, userBean.getTelephone());
+        preparedStatement.setString(4, userBean.getAddress());
+        preparedStatement.setString(5, userBean.getName());
+        preparedStatement.setDouble(6, userBean.getMoney());
 
         result = preparedStatement.executeUpdate();
         System.out.println("Finish adding user in dao.");
