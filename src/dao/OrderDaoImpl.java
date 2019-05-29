@@ -177,7 +177,17 @@ public class OrderDaoImpl implements OrderDao {
             sum += foodbean.getPrice();
         }
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
-        if(balance>=sum) return 0;
+        if (balance >= sum) {
+            connection = dbutil.getConnection();
+            String sql1 = "update users set money=? where userid=? ";
+            preparedStatement = connection.prepareStatement(sql1);
+            preparedStatement.setDouble(1, balance - sum);
+            preparedStatement.setInt(2, userid);
+            if (preparedStatement.executeUpdate() > 0)
+                System.out.println("扣款成功");
+            dbutil.closeDBResource(connection, preparedStatement, resultSet);
+            return 0;
+        }
         return 1;
     }
 }
