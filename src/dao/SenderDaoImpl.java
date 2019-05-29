@@ -74,10 +74,10 @@ public class SenderDaoImpl implements SenderDao {
         String sql = "select * from senders where state = 0";
         preparedStatement = connection.prepareStatement(sql);
         resultSet = preparedStatement.executeQuery();
-        int len = resultSet.getFetchSize();
-        System.out.println("(senderDao):获取sender数量："+len);
+//        int len = resultSet.getFetchSize();
+//        System.out.println("(senderDao):获取sender数量："+len);
         Random rand =new Random();
-        int randPick= (int)(rand.nextInt(len));
+        int randPick= (int)(rand.nextInt(100));
         int cnt = 0;
         if(resultSet!=null){
             while(resultSet.next()) {
