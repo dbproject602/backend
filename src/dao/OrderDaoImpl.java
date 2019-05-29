@@ -101,6 +101,7 @@ public class OrderDaoImpl implements OrderDao {
         preparedStatement=connection.prepareStatement(sql);
         preparedStatement.setString(1,sdf.format(endtime));
         preparedStatement.setInt(2,2);
+        preparedStatement.setInt(3,orderBean.getOrderId());
         int rtn = preparedStatement.executeUpdate();
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
         if(rtn==0) rtn=1; else rtn=0;

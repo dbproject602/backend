@@ -99,6 +99,7 @@ public class SenderDaoImpl implements SenderDao {
         preparedStatement.setInt(1, senderid);
         resultSet = preparedStatement.executeQuery();
         if(resultSet!=null){
+            resultSet.next();
             name = resultSet.getString("sendername");
             key = resultSet.getString("password");
         }
