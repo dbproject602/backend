@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SenderDaoImpl implements SenderDao {
     Connection connection = null;
@@ -73,11 +74,20 @@ public class SenderDaoImpl implements SenderDao {
         String sql = "select * from senders where state = 0";
         preparedStatement = connection.prepareStatement(sql);
         resultSet = preparedStatement.executeQuery();
+        int len = resultSet.getFetchSize();
+        System.out.println("(senderDao):获取sender数量："+len);
+        Random rand =new Random();
+        int randPick= (int)(rand.nextInt(len));
+        int cnt = 0;
         if(resultSet!=null){
-            resultSet.next();
-            sender = resultSet.getInt("senderid");
-            name = resultSet.getString("sendername");
-            key = resultSet.getString("password");
+            while(resultSet.next()) {
+                sender = resultSet.getInt("senderid");
+                name = resultSet.getString("sendername");
+                key = resultSet.getString("password");
+                cnt++;
+                if(cnt >= randPick)
+                    break;
+            }
         }
         dbutil.closeDBResource(connection, preparedStatement, resultSet);
 
